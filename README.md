@@ -1,4 +1,6 @@
-# The Rescue+ Game Engine
+# Forked from the Rescue+ Game Engine
+
+This project uses my Rescue+ Game Engine
 
 Rescue+ is a in-progress 3D game engine written in C++ using the DirectX 11 graphics api.
 
