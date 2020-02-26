@@ -78,11 +78,10 @@ FirstPersonMovement::~FirstPersonMovement()
 { }
 
 // Factory function to safely create a First Person Movement object
-FirstPersonMovement* FirstPersonMovement::CreateFirstPersonCharacter(const char* name,
+FirstPersonMovement* FirstPersonMovement::FirstPersonMovementFactory(GameObject* root,
 	int screenWidth, int screenHeight)
 {
-	//Root object
-	GameObject* root = new GameObject(name);
+	//Add character controller base
 	root->AddComponent<CharacterController>(1, STAND_HEIGHT)->SetCollisionLayerType(CollisionLayer::Player);
 
 	//Camera object

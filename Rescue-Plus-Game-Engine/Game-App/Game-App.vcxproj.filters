@@ -30,6 +30,18 @@
     <Filter Include="Header Files\UserComponents\Movement">
       <UniqueIdentifier>{ee90357d-a232-4699-afd2-8ccd116dfb83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Powers">
+      <UniqueIdentifier>{bc2d389c-885a-43cc-90da-a44f0dd2690e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Powers">
+      <UniqueIdentifier>{ab49565f-4c9a-4dab-bdfc-bfcd6497db5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Helpers">
+      <UniqueIdentifier>{8a331ead-447b-447b-a377-0adac30975b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Helpers">
+      <UniqueIdentifier>{e382beca-fe4c-4484-9b73-856ba846cbb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXCore.cpp">
@@ -65,8 +77,14 @@
     <ClCompile Include="ShipyardCrane.cpp">
       <Filter>Source Files\UserComponents</Filter>
     </ClCompile>
+    <ClCompile Include="P_Teleportation.cpp">
+      <Filter>Source Files\Powers</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\UserComponents</Filter>
+    </ClCompile>
     <ClCompile Include="CameraShaker.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,8 +115,17 @@
     <ClInclude Include="ShipyardCrane.h">
       <Filter>Header Files\UserComponents</Filter>
     </ClInclude>
+    <ClInclude Include="Power.h">
+      <Filter>Header Files\Powers</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Teleportation.h">
+      <Filter>Header Files\Powers</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\UserComponents</Filter>
+    </ClInclude>
     <ClInclude Include="CameraShaker.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

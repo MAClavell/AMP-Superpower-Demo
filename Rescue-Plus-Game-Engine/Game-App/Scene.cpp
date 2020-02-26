@@ -5,7 +5,6 @@
 #include "MAT_Basic.h"
 #include "TestBullet.h"
 #include "ShipyardCrane.h"
-#include "FirstPersonMovement.h"
 #include "Collider.h"
 
 using namespace DirectX;
@@ -305,7 +304,7 @@ void Game::SetupScene()
 	*/
 
 	//Create player
-	player = FirstPersonMovement::CreateFirstPersonCharacter("Player", width, height);
+	player = Player::PlayerFactory("Player", width, height);
 	camera = player->GetCamera();
 
 	//Create the floor

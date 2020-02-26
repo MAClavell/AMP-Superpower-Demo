@@ -108,7 +108,7 @@ public:
 	//
 	// name - the name of the root game object
 	// --------------------------------------------------------
-	static FirstPersonMovement* CreateFirstPersonCharacter(const char* name,
+	static FirstPersonMovement* FirstPersonMovementFactory(GameObject* root,
 		int screenWidth, int screenHeight);
 
 	// --------------------------------------------------------

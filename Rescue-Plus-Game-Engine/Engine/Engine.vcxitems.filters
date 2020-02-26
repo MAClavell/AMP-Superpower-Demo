@@ -233,7 +233,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)InputCodes.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
-    <ClInclude Include="D:\Documents\GitHub\Rescue-Plus-Game-Engine\Rescue-Plus-Game-Engine\Engine\PerlinNoise.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)PerlinNoise.h">
       <Filter>Header Files\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
