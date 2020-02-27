@@ -6,6 +6,7 @@
 #include "TestBullet.h"
 #include "ShipyardCrane.h"
 #include "Collider.h"
+#include "TargetDummy.h"
 
 using namespace DirectX;
 
@@ -21,6 +22,7 @@ void Game::LoadAssets()
 	resourceManager->LoadMeshAsync("Assets\\Models\\Basic\\sphere.obj", device, root);
 	resourceManager->LoadMeshAsync("Assets\\Models\\Basic\\cylinder.obj", device, root);
 	resourceManager->LoadMeshAsync("Assets\\Models\\Shipyard\\shipyard_container.obj", device, root);
+	resourceManager->LoadMeshAsync("Assets\\Models\\Basic\\capsule.obj", device, root);
 
 	//Load shaders
 	resourceManager->LoadVertexShaderAsync("VertexShader.cso", device, context, root);
@@ -371,15 +373,5 @@ void Game::SetupScene()
 
 	CreateCrane(resourceManager);
 
-	//Create trigger
-	trigger = new GameObject("TriggerBox");
-	trigger->SetPosition(0, 3, 0);
-	trigger->AddComponent<BoxCollider>(XMFLOAT3(3, 3, 3), true)->SetDebug(true);
-	//trigger->AddComponent<TestCallbacks>();
-
-	//Create a capsule
-	//GameObject* capsule = new GameObject("Capsule");
-	//capsule->SetPosition(0, 0, 3);
-	//capsule->AddComponent<RigidBody>(5);
-	//capsule->AddComponent<CapsuleCollider>(1, 2, CapsuleDirection::Y)->SetDebug(true);
+	TargetDummy::TargetDummyFactory("TargetDummy1", XMFLOAT3(0, 0, 0), -2);
 }

@@ -86,6 +86,9 @@
     <ClCompile Include="CameraShaker.cpp">
       <Filter>Source Files\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="TargetDummy.cpp">
+      <Filter>Source Files\UserComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DXCore.h">
@@ -126,6 +129,9 @@
     </ClInclude>
     <ClInclude Include="CameraShaker.h">
       <Filter>Header Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetDummy.h">
+      <Filter>Header Files\UserComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
