@@ -41,6 +41,7 @@ void Game::LoadAssets()
 	resourceManager->LoadTexture2DAsync("Assets/Textures/Shipyard/shipyard_concrete_normals.jpg", device, context, root);
 	resourceManager->LoadTexture2DAsync("Assets/Textures/Shipyard/blue.png", device, root);
 	resourceManager->LoadTexture2DAsync("Assets/Textures/Shipyard/yellow.png", device, root);
+	resourceManager->LoadTexture2DAsync("Assets/Textures/Shipyard/orange.png", device, root);
 	resourceManager->LoadTexture2DAsync("Assets/Textures/Shipyard/gray.png", device, root);
 	resourceManager->LoadTexture2DAsync("Assets/Textures/Shipyard/shipyard_crate_diffuse.png", device, context, root);
 	resourceManager->LoadTexture2DAsync("Assets/Textures/Shipyard/shipyard_crate_normals.png", device, context, root);
@@ -110,6 +111,14 @@ void Game::LoadAssets()
 		0.5f, 52
 	);
 	resourceManager->AddMaterial("yellow", yellow);
+	//Orange material
+	Material* orange = new MAT_Basic(vs, ps_basic, XMFLOAT2(10, 10), samplerState,
+		resourceManager->GetTexture2D("Assets/Textures/Shipyard/orange.png"),
+		resourceManager->GetTexture2D("Assets/Textures/normals_flat.png"),
+		shadowSampler,
+		0.5f, 52
+	);
+	resourceManager->AddMaterial("orange", orange);
 	//Gray material
 	Material* gray = new MAT_Basic(vs, ps_basic, XMFLOAT2(10, 10), samplerState,
 		resourceManager->GetTexture2D("Assets/Textures/Shipyard/gray.png"),

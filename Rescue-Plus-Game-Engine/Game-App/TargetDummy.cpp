@@ -14,9 +14,9 @@ TargetDummy* TargetDummy::TargetDummyFactory(const char* name,
 	GameObject* root = new GameObject(name);
 	root->AddComponent<MeshRenderer>(
 		ResourceManager::GetInstance()->GetMesh("Assets\\Models\\Basic\\capsule.obj"),
-		ResourceManager::GetInstance()->GetMaterial("white"));
-	root->AddComponent<RigidBody>(5.0f);
-	root->AddComponent<CapsuleCollider>(1.0f, 2.0f, CapsuleDirection::Y)->SetDebug(true);
+		ResourceManager::GetInstance()->GetMaterial("orange"));
+	root->AddComponent<RigidBody>(1.0f)->SetContraints(false, false, false, true, true, true);
+	root->AddComponent<CapsuleCollider>(1.0f, 2.0f, CapsuleDirection::Y);
 	return root->AddComponent<TargetDummy>(initialPosition, floorHeight);
 }
 
