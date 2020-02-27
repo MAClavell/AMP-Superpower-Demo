@@ -3,8 +3,13 @@
 Player::Player(GameObject* gameObject) : UserComponent(gameObject)
 {
 	fpm = gameObject->GetComponent<FirstPersonMovement>();
-	maxJuice = 10;
-	currentJuice = 10;
+	maxJuice = 8;
+	currentJuice = maxJuice;
+
+	//Setup powers
+	primary = nullptr;
+	secondary = nullptr;
+	tertiary = nullptr;
 }
 
 // Factory function to safely create a Player object
@@ -28,6 +33,13 @@ void Player::FixedUpdate(float fixedTimestep)
 
 void Player::Update(float deltaTime)
 {
+	//Update all the powers
+	if (primary != nullptr)
+		primary->Update(PowerSlot::Primary, currentJuice);
+	if (secondary != nullptr)
+		secondary->Update(PowerSlot::Secondary, currentJuice);
+	if (tertiary != nullptr)
+		tertiary->Update(PowerSlot::Tertiary, currentJuice);
 }
 
 // Get the camera attached to this player

@@ -11,6 +11,7 @@ private:
 
 	Power* primary;
 	Power* secondary;
+	Power* tertiary;
 
 	short maxJuice;
 	short currentJuice;

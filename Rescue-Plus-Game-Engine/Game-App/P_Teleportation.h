@@ -10,21 +10,21 @@ private:
 	//
 	// return PowerPrevent - What the character should do after this function returns
 	// --------------------------------------------------------
-	PowerPrevent Activate() override;
+	PowerPrevent Activate(short& currentJuice) override;
 
 	// --------------------------------------------------------
 	// Hold behaviour
 	// 
 	// return PowerPrevent - What the character should do after this function returns
 	// --------------------------------------------------------
-	PowerPrevent Hold() override;
+	PowerPrevent Hold(short& currentJuice) override;
 
 	// --------------------------------------------------------
 	// Stop behaviour
 	//
 	// return PowerPrevent - What the character should do after this function returns
 	// --------------------------------------------------------
-	PowerPrevent Stop() override;
+	PowerPrevent Stop(short& currentJuice) override;
 
 public:
 
@@ -36,7 +36,7 @@ public:
 	//
 	// return PowerPrevent - What the character should do after this power runs
 	// --------------------------------------------------------
-	virtual PowerPrevent UpdatePower(PowerSlot slot) override;
+	virtual PowerPrevent Update(PowerSlot slot, short& currentJuice) override;
 
 	// --------------------------------------------------------
 	// Call this function to move the character controller according to this power

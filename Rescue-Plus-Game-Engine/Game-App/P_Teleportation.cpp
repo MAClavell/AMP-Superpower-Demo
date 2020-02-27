@@ -9,25 +9,25 @@ P_Teleportation::~P_Teleportation()
 }
 
 // Activate behaviour
-PowerPrevent P_Teleportation::Activate()
+PowerPrevent P_Teleportation::Activate(short& currentJuice)
 {
 	return PowerPrevent::Nothing;
 }
 
 // Hold behaviour
-PowerPrevent P_Teleportation::Hold()
+PowerPrevent P_Teleportation::Hold(short& currentJuice)
 {
 	return PowerPrevent::Nothing;
 }
 
 // Stop behaviour
-PowerPrevent P_Teleportation::Stop()
+PowerPrevent P_Teleportation::Stop(short& currentJuice)
 {
 	return PowerPrevent::Nothing;
 }
 
 // Update the power, running activate, hold, and stop behaviour
-PowerPrevent P_Teleportation::UpdatePower(PowerSlot slot)
+PowerPrevent P_Teleportation::Update(PowerSlot slot, short& currentJuice)
 {
 	return PowerPrevent::Nothing;
 }
