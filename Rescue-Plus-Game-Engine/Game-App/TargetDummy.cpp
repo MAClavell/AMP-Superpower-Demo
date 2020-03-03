@@ -24,6 +24,7 @@ TargetDummy::TargetDummy(GameObject* gameObject, XMFLOAT3 initialPosition,
 	float floorHeight) : UserComponent(gameObject)
 {
 	this->initialPosition = initialPosition;
+	gameObject->SetPosition(initialPosition);
 	this->floorHeight = floorHeight;
 	health = MAX_HEALTH;
 	rb = gameObject->GetComponent<RigidBody>();

@@ -115,5 +115,10 @@ public:
 	// Get the controller's camera
 	// --------------------------------------------------------
 	Camera* GetCamera();
+
+	// --------------------------------------------------------
+	// Get the collider base attached to this player
+	// --------------------------------------------------------
+	ColliderBase* GetColliderBase();
 };
 

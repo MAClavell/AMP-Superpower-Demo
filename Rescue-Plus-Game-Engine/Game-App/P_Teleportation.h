@@ -1,8 +1,19 @@
 #pragma once
 #include "Power.h"
+#include "InputManager.h"
+#include "Raycast.h"
 
 class P_Teleportation : public Power
 {
+	DirectX::XMFLOAT3 teleportPosition;
+	InputManager* inputManager;
+	PowerPrevent prevent;
+	CollisionLayers layers;
+	RaycastHit hit;
+	float maxRange;
+	bool active;
+	bool teleport;
+
 private:
 
 	// --------------------------------------------------------
@@ -10,21 +21,21 @@ private:
 	//
 	// return PowerPrevent - What the character should do after this function returns
 	// --------------------------------------------------------
-	PowerPrevent Activate(short& currentJuice) override;
+	PowerPrevent Activate(Player& player, short& currentJuice) override;
 
 	// --------------------------------------------------------
 	// Hold behaviour
 	// 
 	// return PowerPrevent - What the character should do after this function returns
 	// --------------------------------------------------------
-	PowerPrevent Hold(short& currentJuice) override;
+	PowerPrevent Hold(Player& player, short& currentJuice) override;
 
 	// --------------------------------------------------------
 	// Stop behaviour
 	//
 	// return PowerPrevent - What the character should do after this function returns
 	// --------------------------------------------------------
-	PowerPrevent Stop(short& currentJuice) override;
+	PowerPrevent Stop(Player& player, short& currentJuice) override;
 
 public:
 
@@ -36,13 +47,13 @@ public:
 	//
 	// return PowerPrevent - What the character should do after this power runs
 	// --------------------------------------------------------
-	virtual PowerPrevent Update(PowerSlot slot, short& currentJuice) override;
+	virtual PowerPrevent Update(Player& player, PowerSlot slot, short& currentJuice) override;
 
 	// --------------------------------------------------------
 	// Call this function to move the character controller according to this power
 	//
 	// return bool - If the power moved the character
 	// --------------------------------------------------------
-	virtual bool MoveCharacter() override;
+	virtual bool MoveCharacter(Player& player) override;
 };
 

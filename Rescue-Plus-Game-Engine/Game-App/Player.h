@@ -25,7 +25,7 @@ public:
 	static Player* PlayerFactory(const char* name, int screenWidth, int screenHeight);
 
 	Player(GameObject* gameObject);
-	~Player() { };
+	~Player();
 
 	void FixedUpdate(float fixedTimestep) override;
 	void Update(float deltaTime) override;
@@ -34,5 +34,10 @@ public:
 	// Get the camera attached to this player
 	// --------------------------------------------------------
 	Camera* GetCamera();
+
+	// --------------------------------------------------------
+	// Get the collider base attached to this player
+	// --------------------------------------------------------
+	ColliderBase* GetColliderBase();
 };
 

@@ -341,13 +341,13 @@ PxQueryFilterData GetQueryFilterData(CollisionLayers layers)
 }
 
 // Cast a ray into the physics scene
-bool Raycast(XMFLOAT3 origin, XMFLOAT3 direction,
-	float maxDistance, ShapeDrawType drawType, float drawDuration)
+bool Raycast(XMFLOAT3 origin, XMFLOAT3 direction, float maxDistance,
+	CollisionLayers layers, ShapeDrawType drawType, float drawDuration)
 {
 	PxRaycastBuffer hit;
 	bool didHit = PhysicsManager::GetInstance()->GetScene()->raycast(
 		Float3ToVec3(origin), Float3ToVec3(direction),
-		maxDistance, hit);
+		maxDistance, hit, PxHitFlag::eDEFAULT, GetQueryFilterData(layers));
 	
 	//Debug drawing
 	if (drawType != ShapeDrawType::None)
@@ -363,12 +363,13 @@ bool Raycast(XMFLOAT3 origin, XMFLOAT3 direction,
 // Cast a ray into the physics scene
 // hitInfo - out variable to get hit information out of the raycast
 bool Raycast(DirectX::XMFLOAT3 origin, DirectX::XMFLOAT3 direction, RaycastHit* hitInfo,
-	float maxDistance, ShapeDrawType drawType, float drawDuration)
+	float maxDistance, CollisionLayers layers,
+	ShapeDrawType drawType, float drawDuration)
 {
 	PxRaycastBuffer pxHit;
 	if (PhysicsManager::GetInstance()->GetScene()->raycast(
 		Float3ToVec3(origin), Float3ToVec3(direction),
-		maxDistance, pxHit))
+		maxDistance, pxHit, PxHitFlag::eDEFAULT, GetQueryFilterData(layers)))
 	{
 		auto flags = pxHit.block.flags;
 
@@ -426,7 +427,7 @@ bool Sweep(ColliderBase* collider, XMFLOAT3 direction, SweepHit* hitInfo, float 
 		maxDistance, pxHit, PxHitFlag::eDEFAULT, GetQueryFilterData(layerMask), PhysicsManager::GetInstance()))
 	{
 		auto flags = pxHit.block.flags;
-
+		
 		//Point
 		if (flags.isSet(PxHitFlag::ePOSITION))
 			hitInfo->point = Vec3ToFloat3(pxHit.block.position);
@@ -458,7 +459,7 @@ bool Sweep(ColliderBase* collider, XMFLOAT3 direction, SweepHit* hitInfo, float 
 				case ColliderType::Box:
 				{
 					BoxCollider* box = (BoxCollider*)collider;
-					Renderer::GetInstance()->AddDebugCube(Vec3ToFloat3(pos), QuatToFloat4(rot),
+					Renderer::GetInstance()->AddDebugCube(hitInfo->point, QuatToFloat4(rot),
 						box->GetSize(), drawType, drawDuration);
 				}
 					break;
@@ -466,7 +467,7 @@ bool Sweep(ColliderBase* collider, XMFLOAT3 direction, SweepHit* hitInfo, float 
 				case ColliderType::Sphere:
 				{
 					SphereCollider* sphere = (SphereCollider*)collider;
-					Renderer::GetInstance()->AddDebugSphere(Vec3ToFloat3(pos), QuatToFloat4(rot),
+					Renderer::GetInstance()->AddDebugSphere(hitInfo->point, QuatToFloat4(rot),
 						sphere->GetRadius(), drawType, drawDuration);
 				}
 					break;
@@ -475,7 +476,7 @@ bool Sweep(ColliderBase* collider, XMFLOAT3 direction, SweepHit* hitInfo, float 
 				{
 					CapsuleCollider* capsule = (CapsuleCollider*)collider;
 					Renderer::GetInstance()->AddDebugCapsule(capsule->GetRadius(), capsule->GetHeight(),
-						Vec3ToFloat3(pos), QuatToFloat4(rot),
+						hitInfo->point, QuatToFloat4(rot),
 						drawType, drawDuration);
 				}
 					break;
@@ -484,7 +485,7 @@ bool Sweep(ColliderBase* collider, XMFLOAT3 direction, SweepHit* hitInfo, float 
 				{
 					CharacterController* controller = (CharacterController*)collider;
 					Renderer::GetInstance()->AddDebugCapsule(controller->GetRadius(), controller->GetHeight(),
-						Vec3ToFloat3(pos), QuatToFloat4(rot),
+						hitInfo->point, QuatToFloat4(rot),
 						drawType, drawDuration);
 				}
 					break;

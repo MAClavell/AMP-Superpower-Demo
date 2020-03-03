@@ -576,3 +576,9 @@ Camera* FirstPersonMovement::GetCamera()
 {
 	return camera;
 }
+
+// Get the collider base attached to this movement
+ColliderBase* FirstPersonMovement::GetColliderBase()
+{
+	return controller;
+}

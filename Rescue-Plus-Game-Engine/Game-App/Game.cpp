@@ -224,42 +224,6 @@ void Game::Update(float deltaTime, float totalTime)
 		box4->AddComponent<BoxCollider>(box4->GetScale());
 	}
 
-	if (inputManager->GetKey(Key::T))
-	{
-		static float amt = 4;
-		amt += 2 * deltaTime;
-		crate10C->SetLocalPosition(0, amt, 0);
-	}
-
-	if (inputManager->GetKey(Key::R))
-	{
-		static float amt = 0;
-		amt += 10 * deltaTime;
-		crate10C->SetLocalRotation(0, amt, 45);
-	}
-
-	if (inputManager->GetKeyDown(Key::H))
-	{
-		RaycastHit hit;
-		if (Raycast(camera->gameObject()->GetPosition(), camera->gameObject()->GetForwardAxis(), &hit, 10,
-			ShapeDrawType::ForDuration, 30))
-		{
-			printf("Raycast hit on: %s\n", hit.gameObject->GetName().c_str());
-		}
-	}
-
-	if (inputManager->GetKeyDown(Key::Y))
-	{
-		SweepHit hit;
-		if (Sweep(crate10C->GetComponent<Collider>(), camera->gameObject()->GetForwardAxis(), &hit, 10,
-			CollisionLayers(true),
-			ShapeDrawType::ForDuration, 30))
-		{
-			printf("Sweep hit on: %s\n", hit.gameObject->GetName().c_str());
-		}
-	}
-
-
 	//All game code goes above
 	// --------------------------------------------------------
 

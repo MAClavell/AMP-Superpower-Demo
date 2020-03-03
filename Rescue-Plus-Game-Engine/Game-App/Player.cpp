@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "P_Teleportation.h"
 
 Player::Player(GameObject* gameObject) : UserComponent(gameObject)
 {
@@ -7,10 +8,21 @@ Player::Player(GameObject* gameObject) : UserComponent(gameObject)
 	currentJuice = maxJuice;
 
 	//Setup powers
-	primary = nullptr;
+	primary = new P_Teleportation();
 	secondary = nullptr;
 	tertiary = nullptr;
 }
+
+Player::~Player() 
+{
+	if (primary != nullptr)
+		delete primary;
+	if (secondary != nullptr)
+		delete secondary;
+	if (tertiary != nullptr)
+		delete tertiary;
+}
+
 
 // Factory function to safely create a Player object
 Player* Player::PlayerFactory(const char* name, int screenWidth, int screenHeight)
@@ -29,21 +41,34 @@ Player* Player::PlayerFactory(const char* name, int screenWidth, int screenHeigh
 
 void Player::FixedUpdate(float fixedTimestep)
 {
+	//Move the player from powers
+	if (primary != nullptr)
+		primary->MoveCharacter(*this);
+	if (secondary != nullptr)
+		secondary->MoveCharacter(*this);
+	if (tertiary != nullptr)
+		secondary->MoveCharacter(*this);
 }
 
 void Player::Update(float deltaTime)
 {
 	//Update all the powers
 	if (primary != nullptr)
-		primary->Update(PowerSlot::Primary, currentJuice);
+		primary->Update(*this, PowerSlot::Primary, currentJuice);
 	if (secondary != nullptr)
-		secondary->Update(PowerSlot::Secondary, currentJuice);
+		secondary->Update(*this, PowerSlot::Secondary, currentJuice);
 	if (tertiary != nullptr)
-		tertiary->Update(PowerSlot::Tertiary, currentJuice);
+		tertiary->Update(*this, PowerSlot::Tertiary, currentJuice);
 }
 
 // Get the camera attached to this player
 Camera* Player::GetCamera()
 {
 	return fpm->GetCamera();
+}
+
+// Get the collider base attached to this player
+ColliderBase* Player::GetColliderBase()
+{
+	return fpm->GetColliderBase();
 }
