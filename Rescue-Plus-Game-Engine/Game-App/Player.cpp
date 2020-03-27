@@ -72,3 +72,9 @@ ColliderBase* Player::GetColliderBase()
 {
 	return fpm->GetColliderBase();
 }
+
+// Get the current height of the player
+float Player::GetHeight()
+{
+	return fpm->GetHeight();
+}

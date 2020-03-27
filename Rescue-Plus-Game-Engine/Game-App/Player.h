@@ -39,5 +39,10 @@ public:
 	// Get the collider base attached to this player
 	// --------------------------------------------------------
 	ColliderBase* GetColliderBase();
+
+	// --------------------------------------------------------
+	// Get the current height of the player
+	// --------------------------------------------------------
+	float GetHeight();
 };
 

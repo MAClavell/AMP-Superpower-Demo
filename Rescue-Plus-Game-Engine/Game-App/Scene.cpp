@@ -286,7 +286,7 @@ static GameObject* CreateContainer(ResourceManager* rm, const char* name)
 	cont->AddComponent<MeshRenderer>(
 		rm->GetMesh("Assets\\Models\\Shipyard\\shipyard_container.obj"),
 		rm->GetMaterial("shipyard_container"));
-	cont->AddComponent<BoxCollider>(XMFLOAT3(25.5f, 10, 10), false, nullptr, XMFLOAT3(-0.2f, 5.1f, 0))->SetDebug(true);
+	cont->AddComponent<BoxCollider>(XMFLOAT3(25.5f, 10, 10), false, nullptr, XMFLOAT3(-0.2f, 5.1f, 0));
 	return cont;
 }
 
@@ -378,7 +378,7 @@ void Game::SetupScene()
 	crate10C->SetParent(crate10);
 	crate10C->SetLocalPosition(0, 4, 0);
 	crate10C->SetLocalRotation(0, 0, 45);
-	crate10C->AddComponent<BoxCollider>(crate10C->GetScale())->SetDebug(true);
+	crate10C->AddComponent<BoxCollider>(crate10C->GetScale());
 
 	CreateCrane(resourceManager);
 

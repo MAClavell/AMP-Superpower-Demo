@@ -67,5 +67,21 @@ bool Raycast(DirectX::XMFLOAT3 origin, DirectX::XMFLOAT3 direction,
 bool Sweep(ColliderBase* collider, DirectX::XMFLOAT3 direction,
 	SweepHit* hitInfo,
 	float maxDistance = PX_MAX_SWEEP_DISTANCE,
-	CollisionLayers layers = CollisionLayers(),
+	CollisionLayers layerMask = CollisionLayers(),
+	ShapeDrawType drawType = ShapeDrawType::None, float drawDuration = 1);
+
+// --------------------------------------------------------
+// Cast a geometry shape into the physics scene
+// hitInfo - out variable to get hit information out of the sweep
+//
+// startInfront - when true, moves the starting point to not intersect
+//		with the given collider
+//
+// returns bool whether an object was hit or not
+// --------------------------------------------------------
+bool Sweep(ColliderBase* collider, DirectX::XMFLOAT3 startingPoint,
+	DirectX::XMFLOAT3 direction,
+	SweepHit* hitInfo,
+	float maxDistance = PX_MAX_SWEEP_DISTANCE,
+	CollisionLayers layerMask = CollisionLayers(),
 	ShapeDrawType drawType = ShapeDrawType::None, float drawDuration = 1);

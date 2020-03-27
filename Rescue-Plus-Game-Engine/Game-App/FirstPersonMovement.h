@@ -120,5 +120,10 @@ public:
 	// Get the collider base attached to this player
 	// --------------------------------------------------------
 	ColliderBase* GetColliderBase();
+
+	// --------------------------------------------------------
+	// Get the height of the character controller
+	// --------------------------------------------------------
+	float GetHeight();
 };
 

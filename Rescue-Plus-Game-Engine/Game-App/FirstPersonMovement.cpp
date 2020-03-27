@@ -582,3 +582,8 @@ ColliderBase* FirstPersonMovement::GetColliderBase()
 {
 	return controller;
 }
+
+float FirstPersonMovement::GetHeight()
+{
+	return controller->GetHeight();
+}

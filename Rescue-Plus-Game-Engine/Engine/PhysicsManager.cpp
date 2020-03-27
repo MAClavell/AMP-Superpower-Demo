@@ -407,14 +407,17 @@ bool Raycast(DirectX::XMFLOAT3 origin, DirectX::XMFLOAT3 direction, RaycastHit* 
 	return false;
 }
 
-// Cast a geometry shape into the physics scene
-bool Sweep(ColliderBase* collider, XMFLOAT3 direction, SweepHit* hitInfo, float maxDistance,
-	CollisionLayers layerMask, ShapeDrawType drawType, float drawDuration)
+bool Sweep(ColliderBase* collider, DirectX::XMFLOAT3 startingPoint,
+	DirectX::XMFLOAT3 direction,
+	SweepHit* hitInfo,
+	float maxDistance,
+	CollisionLayers layerMask,
+	ShapeDrawType drawType, float drawDuration) 
 {
 	PxShape* shape = collider->GetPxShape();
 
 	//Get correct position to start at
-	PxVec3 pos = shape->getActor()->getGlobalPose().p + shape->getLocalPose().p;
+	PxVec3 pos = Float3ToVec3(startingPoint);
 	PxQuat rot = shape->getActor()->getGlobalPose().q * shape->getLocalPose().q;
 
 	//Create transform
@@ -427,13 +430,11 @@ bool Sweep(ColliderBase* collider, XMFLOAT3 direction, SweepHit* hitInfo, float 
 		maxDistance, pxHit, PxHitFlag::eDEFAULT, GetQueryFilterData(layerMask), PhysicsManager::GetInstance()))
 	{
 		auto flags = pxHit.block.flags;
-		
+
 		//Point
-		if (flags.isSet(PxHitFlag::ePOSITION))
-			hitInfo->point = Vec3ToFloat3(pxHit.block.position);
+		hitInfo->point = Vec3ToFloat3(pxHit.block.position);
 		//Normal
-		if (flags.isSet(PxHitFlag::eNORMAL))
-			hitInfo->normal = Vec3ToFloat3(pxHit.block.normal);
+		hitInfo->normal = Vec3ToFloat3(pxHit.block.normal);
 		//Distance
 		hitInfo->distance = pxHit.block.distance;
 
@@ -456,42 +457,42 @@ bool Sweep(ColliderBase* collider, XMFLOAT3 direction, SweepHit* hitInfo, float 
 
 			switch (collider->GetType())
 			{
-				case ColliderType::Box:
-				{
-					BoxCollider* box = (BoxCollider*)collider;
-					Renderer::GetInstance()->AddDebugCube(hitInfo->point, QuatToFloat4(rot),
-						box->GetSize(), drawType, drawDuration);
-				}
-					break;
+			case ColliderType::Box:
+			{
+				BoxCollider* box = (BoxCollider*)collider;
+				Renderer::GetInstance()->AddDebugCube(hitInfo->point, QuatToFloat4(rot),
+					box->GetSize(), drawType, drawDuration);
+			}
+			break;
 
-				case ColliderType::Sphere:
-				{
-					SphereCollider* sphere = (SphereCollider*)collider;
-					Renderer::GetInstance()->AddDebugSphere(hitInfo->point, QuatToFloat4(rot),
-						sphere->GetRadius(), drawType, drawDuration);
-				}
-					break;
+			case ColliderType::Sphere:
+			{
+				SphereCollider* sphere = (SphereCollider*)collider;
+				Renderer::GetInstance()->AddDebugSphere(hitInfo->point, QuatToFloat4(rot),
+					sphere->GetRadius(), drawType, drawDuration);
+			}
+			break;
 
-				case ColliderType::Capsule:
-				{
-					CapsuleCollider* capsule = (CapsuleCollider*)collider;
-					Renderer::GetInstance()->AddDebugCapsule(capsule->GetRadius(), capsule->GetHeight(),
-						hitInfo->point, QuatToFloat4(rot),
-						drawType, drawDuration);
-				}
-					break;
+			case ColliderType::Capsule:
+			{
+				CapsuleCollider* capsule = (CapsuleCollider*)collider;
+				Renderer::GetInstance()->AddDebugCapsule(capsule->GetRadius(), capsule->GetHeight(),
+					hitInfo->point, QuatToFloat4(rot),
+					drawType, drawDuration);
+			}
+			break;
 
-				case ColliderType::Controller:
-				{
-					CharacterController* controller = (CharacterController*)collider;
-					Renderer::GetInstance()->AddDebugCapsule(controller->GetRadius(), controller->GetHeight(),
-						hitInfo->point, QuatToFloat4(rot),
-						drawType, drawDuration);
-				}
-					break;
+			case ColliderType::Controller:
+			{
+				CharacterController* controller = (CharacterController*)collider;
+				Renderer::GetInstance()->AddDebugCapsule(controller->GetRadius(), controller->GetHeight(),
+					hitInfo->point, QuatToFloat4(rot),
+					drawType, drawDuration);
+			}
+			break;
 
-				default:
-					break;
+			default:
+				break;
 			}
 		}
 
@@ -505,4 +506,15 @@ bool Sweep(ColliderBase* collider, XMFLOAT3 direction, SweepHit* hitInfo, float 
 			direction, drawType, drawDuration);
 
 	return false;
+}
+
+// Cast a geometry shape into the physics scene
+bool Sweep(ColliderBase* collider, XMFLOAT3 direction, SweepHit* hitInfo, float maxDistance,
+	CollisionLayers layerMask, ShapeDrawType drawType, float drawDuration)
+{
+	//Get correct position to start at
+	PxShape* shape = collider->GetPxShape();
+	PxVec3 pos = shape->getActor()->getGlobalPose().p + shape->getLocalPose().p;
+
+	return Sweep(collider, Vec3ToFloat3(pos), direction, hitInfo, maxDistance, layerMask, drawType, drawDuration);
 }

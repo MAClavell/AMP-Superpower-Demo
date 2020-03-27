@@ -168,5 +168,6 @@ float CharacterController::GetHeight()
 // Resize the character controller.
 void CharacterController::Resize(float height)
 {
+	this->height = height;
 	pxController->resize(height);
 }

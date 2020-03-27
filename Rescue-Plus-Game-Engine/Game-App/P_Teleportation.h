@@ -10,6 +10,7 @@ class P_Teleportation : public Power
 	PowerPrevent prevent;
 	CollisionLayers layers;
 	RaycastHit hit;
+	SweepHit swHit;
 	float maxRange;
 	bool active;
 	bool teleport;

@@ -1,5 +1,7 @@
 #include "P_Teleportation.h"
 #include "Player.h"
+#include "Renderer.h"
+#include "PhysicsManager.h"
 
 using namespace DirectX;
 
@@ -28,30 +30,61 @@ PowerPrevent P_Teleportation::Activate(Player& player, short& currentJuice)
 // Hold behaviour
 PowerPrevent P_Teleportation::Hold(Player& player, short& currentJuice)
 {
-	/*if (Sweep(player.GetColliderBase(), player.GetCamera()->gameObject()->GetForwardAxis(), &hit, 10,
-		layers, ShapeDrawType::ForDuration, 10))
-	{
-		printf("Sweep hit on: %s\n", hit.gameObject->GetName().c_str());
-	}*/
-
 	GameObject* cameraGO = player.GetCamera()->gameObject();
-	XMFLOAT3 pos = XMFLOAT3(0, 0, 0);
-	
-	//See if we hit any physics objects
-	if (Raycast(cameraGO->GetPosition(),
-		cameraGO->GetForwardAxis(), &hit, maxRange,
-		layers, ShapeDrawType::ForDuration, 4))
+
+	//Have to find a valid position
+	//Repeatedly raycast to see if we have a valid position
+	float rangeMod = 0;
+	float halfHeight = player.GetHeight() / 2;
+	while (true)
 	{
-		pos = hit.point;
-		printf("Raycast hit on: %s\n", hit.gameObject->GetName().c_str());
-	}
-	//We didn't, so calculate our reticle position
-	else
-	{
-		//pos = (cameraGO->GetPosition() + cameraGO->GetForwardAxis()) * maxRange;
+		if (Raycast(cameraGO->GetPosition(),
+			cameraGO->GetForwardAxis(), &hit, maxRange - rangeMod,
+			layers, ShapeDrawType::ForDuration, 0.5f))
+		{
+			teleportPosition = hit.point;
+		}
+		else XMStoreFloat3(&teleportPosition, XMVectorAdd(XMLoadFloat3(&cameraGO->GetPosition()),
+			XMVectorScale(XMLoadFloat3(&cameraGO->GetForwardAxis()),
+				maxRange - rangeMod)));
+
+		//Check if we can fit at the location
+		if (!Sweep(player.GetColliderBase(), teleportPosition, player.gameObject()->GetForwardAxis(), &swHit, 0,
+			layers))
+		{
+			break;
+		}
+
+		//Check if we can fit above the point
+		if (!Sweep(player.GetColliderBase(), teleportPosition, player.gameObject()->GetUpAxis(), &swHit, halfHeight,
+			layers))
+		{
+			XMStoreFloat3(&teleportPosition, XMVectorAdd(XMLoadFloat3(&teleportPosition),
+				XMVectorScale(XMLoadFloat3(&player.gameObject()->GetUpAxis()),
+					halfHeight)));
+			break;
+		}
+
+		//Check if we can fit below the point
+		XMFLOAT3 downAxis;
+		XMStoreFloat3(&downAxis, XMVectorScale(XMLoadFloat3(&player.gameObject()->GetUpAxis()), -1));
+		if (!Sweep(player.GetColliderBase(), teleportPosition, downAxis, &swHit, halfHeight,
+			layers))
+		{
+			XMStoreFloat3(&teleportPosition, XMVectorAdd(XMLoadFloat3(&teleportPosition),
+				XMVectorScale(XMLoadFloat3(&downAxis), halfHeight)));
+			break;
+		}
+
+		//Move the check backwards if no valid position was found
+		rangeMod += 0.25f;
 	}
 
-	//Check if player can fit
+	//Move the teleporter indicator
+	XMFLOAT4 rot;
+	XMStoreFloat4(&rot, XMQuaternionMultiply(XMQuaternionRotationAxis(XMVectorSet(0, 0, 1, 0), physx::PxHalfPi),
+		XMLoadFloat4(&player.gameObject()->GetRotation())));
+	Renderer::GetInstance()->AddDebugCapsule(1, halfHeight * 2, teleportPosition, rot, ShapeDrawType::SingleFrame);
 
 	return PowerPrevent::Nothing;
 }
@@ -93,7 +126,7 @@ bool P_Teleportation::MoveCharacter(Player& player)
 {
 	if (teleport)
 	{
-		//player.gameObject()->SetPosition(teleportPosition);
+		player.gameObject()->SetPosition(teleportPosition);
 		teleport = false;
 		return true;
 	}
