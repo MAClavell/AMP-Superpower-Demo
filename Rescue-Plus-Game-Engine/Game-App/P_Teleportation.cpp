@@ -38,6 +38,7 @@ PowerPrevent P_Teleportation::Hold(Player& player, short& currentJuice)
 	float halfHeight = player.GetHeight() / 2;
 	while (true)
 	{
+		RaycastHit hit;
 		if (Raycast(cameraGO->GetPosition(),
 			cameraGO->GetForwardAxis(), &hit, maxRange - rangeMod,
 			layers, ShapeDrawType::ForDuration, 0.5f))
@@ -49,6 +50,7 @@ PowerPrevent P_Teleportation::Hold(Player& player, short& currentJuice)
 				maxRange - rangeMod)));
 
 		//Check if we can fit at the location
+		SweepHit swHit;
 		if (!Sweep(player.GetColliderBase(), teleportPosition, player.gameObject()->GetForwardAxis(), &swHit, 0,
 			layers))
 		{
@@ -56,23 +58,22 @@ PowerPrevent P_Teleportation::Hold(Player& player, short& currentJuice)
 		}
 
 		//Check if we can fit above the point
-		if (!Sweep(player.GetColliderBase(), teleportPosition, player.gameObject()->GetUpAxis(), &swHit, halfHeight,
+		XMFLOAT3 tempPos = teleportPosition;
+		tempPos.y += halfHeight;
+		if (!Sweep(player.GetColliderBase(), tempPos, player.gameObject()->GetUpAxis(), &swHit, 0,
 			layers))
 		{
-			XMStoreFloat3(&teleportPosition, XMVectorAdd(XMLoadFloat3(&teleportPosition),
-				XMVectorScale(XMLoadFloat3(&player.gameObject()->GetUpAxis()),
-					halfHeight)));
+			teleportPosition = tempPos;
 			break;
 		}
 
 		//Check if we can fit below the point
-		XMFLOAT3 downAxis;
-		XMStoreFloat3(&downAxis, XMVectorScale(XMLoadFloat3(&player.gameObject()->GetUpAxis()), -1));
-		if (!Sweep(player.GetColliderBase(), teleportPosition, downAxis, &swHit, halfHeight,
+		tempPos = teleportPosition;
+		tempPos.y -= halfHeight;
+		if (!Sweep(player.GetColliderBase(), tempPos, player.gameObject()->GetUpAxis(), &swHit, 0,
 			layers))
 		{
-			XMStoreFloat3(&teleportPosition, XMVectorAdd(XMLoadFloat3(&teleportPosition),
-				XMVectorScale(XMLoadFloat3(&downAxis), halfHeight)));
+			teleportPosition = tempPos;
 			break;
 		}
 
