@@ -2,6 +2,7 @@
 #include "PhysicsManager.h"
 #include "PhysicsHelper.h"
 #include "Renderer.h"
+#include "Times.h"
 
 using namespace DirectX;
 using namespace physx;
@@ -60,17 +61,17 @@ CharacterController::~CharacterController()
 
 // Move the character by a displacement (in world coordinates)
 CharacterControllerCollisionFlags CharacterController::Move(DirectX::XMFLOAT3 displacement,
-	float deltaTime, bool applyGravity, float gravityScale)
+	bool applyGravity, float gravityScale)
 {
 	//Apply gravity if we want to
 	if (applyGravity)
-		displacement.y += (physicsManager->GetGravity() * gravityScale) * (deltaTime * 2);
+		displacement.y += (physicsManager->GetGravity() * gravityScale) * (Time::deltaTime() * 2);
 
 	//Move controller
 	PxControllerCollisionFlags colFlags = pxController->move(
 		Float3ToVec3(displacement),
 		0,
-		deltaTime,
+		Time::deltaTime(),
 		filters);
 
 	//Update the gameobject
@@ -95,7 +96,7 @@ CharacterControllerCollisionFlags CharacterController::Move(DirectX::XMFLOAT3 di
 }
 
 // Update debug view
-void CharacterController::Update(float deltaTime)
+void CharacterController::Update()
 {
 	if (debug)
 	{
@@ -108,7 +109,7 @@ void CharacterController::Update(float deltaTime)
 }
 
 // Update collisions
-void CharacterController::FixedUpdate(float deltaTime)
+void CharacterController::FixedUpdate()
 {
 	collisionResolver->ResolveCollisions(gameObject());
 }

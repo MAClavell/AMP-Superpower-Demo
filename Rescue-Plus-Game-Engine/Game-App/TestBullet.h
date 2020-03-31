@@ -16,6 +16,6 @@ public:
 	TestBullet(GameObject* gameObject);
 	~TestBullet();
 
-	void Update(float deltaTime) override;
+	void Update() override;
 };
 

@@ -30,7 +30,7 @@ TargetDummy::TargetDummy(GameObject* gameObject, XMFLOAT3 initialPosition,
 	rb = gameObject->GetComponent<RigidBody>();
 }
 
-void TargetDummy::Update(float deltaTime)
+void TargetDummy::Update()
 {
 	if (gameObject()->GetPosition().y < floorHeight)
 		Reset();

@@ -22,7 +22,7 @@ private:
 	// --------------------------------------------------------
 	// Allow fps movement for debugging
 	// --------------------------------------------------------
-	void Movement(float deltaTime);
+	void Movement();
 
 public:
 	// --------------------------------------------------------
@@ -38,9 +38,7 @@ public:
 
 	// --------------------------------------------------------
 	// Update the movement (runs every frame)
-	//
-	// deltaTime - The time between frames
 	// --------------------------------------------------------
-	void Update(float deltaTime) override;
+	void Update() override;
 };
 

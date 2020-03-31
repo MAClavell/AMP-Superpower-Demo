@@ -21,7 +21,7 @@ public:
 	// --------------------------------------------------------
 	// Update the shaker to apply any shaking
 	// --------------------------------------------------------
-	void Update(float deltaTime, DirectX::XMFLOAT3 baseRotation);
+	void Update(DirectX::XMFLOAT3 baseRotation);
 
 	// --------------------------------------------------------
 	// Add a trauma amount to the shaker (0-1)

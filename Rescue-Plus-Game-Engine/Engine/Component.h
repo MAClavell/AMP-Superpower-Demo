@@ -20,12 +20,12 @@ public:
 	// --------------------------------------------------------
 	// Update this component
 	// --------------------------------------------------------
-	virtual void Update(float deltaTime) {};
+	virtual void Update() {};
 
 	// --------------------------------------------------------
 	// Update this component at the fixed timestep
 	// --------------------------------------------------------
-	virtual void FixedUpdate(float deltaTime) {};
+	virtual void FixedUpdate() {};
 
 	// --------------------------------------------------------
 	// Get the GameObject this component is tied to

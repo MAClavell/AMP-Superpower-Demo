@@ -2,6 +2,7 @@
 #include "ExtendedMath.h"
 #include "PhysicsManager.h"
 #include "Raycast.h"
+#include "Time.h"
 
 using namespace DirectX;
 
@@ -97,7 +98,7 @@ FirstPersonMovement* FirstPersonMovement::FirstPersonMovementFactory(GameObject*
 }
 
 //Apply movement
-void FirstPersonMovement::FixedUpdate(float fixedTimestep)
+void FirstPersonMovement::FixedUpdate()
 {
 	lastFrameCameraPos = cameraGO->GetLocalPosition();
 
@@ -173,21 +174,21 @@ void FirstPersonMovement::FixedUpdate(float fixedTimestep)
 		if (movementZ == 1)
 		{
 			if (zMult < 1)
-				zMult += fixedTimestep * mult;
+				zMult += Time::fixedDeltaTime() * mult;
 		}
 		//S
 		else if (movementZ == 2)
 		{
 			if(zMult > -1)
-				zMult -= fixedTimestep * mult;
+				zMult -= Time::fixedDeltaTime() * mult;
 		}
 		//No input
 		else
 		{
 			if (zMult < -0.05)
-				zMult += fixedTimestep * mult;
+				zMult += Time::fixedDeltaTime() * mult;
 			else if (zMult > 0.05)
-				zMult -= fixedTimestep * mult;
+				zMult -= Time::fixedDeltaTime() * mult;
 			else zMult = 0;
 		}
 		moveVec = XMVectorAdd(moveVec,
@@ -200,21 +201,21 @@ void FirstPersonMovement::FixedUpdate(float fixedTimestep)
 		if (movementX == 1)
 		{
 			if (xMult < 1)
-				xMult += fixedTimestep * mult;
+				xMult += Time::fixedDeltaTime() * mult;
 		}
 		//A
 		else if (movementX == 2)
 		{
 			if (xMult > -1)
-				xMult -= fixedTimestep * mult;
+				xMult -= Time::fixedDeltaTime() * mult;
 		}
 		//No input
 		else
 		{
 			if (xMult < -0.05)
-				xMult += fixedTimestep * mult;
+				xMult += Time::fixedDeltaTime() * mult;
 			else if (xMult > 0.05)
-				xMult -= fixedTimestep * mult;
+				xMult -= Time::fixedDeltaTime() * mult;
 			else xMult = 0;
 		}
 		moveVec = XMVectorAdd(moveVec,
@@ -266,7 +267,7 @@ void FirstPersonMovement::FixedUpdate(float fixedTimestep)
 	}
 
 	//Apply acceleration to velocity
-	velVec = XMVectorAdd(velVec, XMVectorScale(accVec, fixedTimestep));
+	velVec = XMVectorAdd(velVec, XMVectorScale(accVec, Time::fixedDeltaTime()));
 
 	//Clamp velocity on the horizontal axis
 	float y = XMVectorGetY(velVec);
@@ -276,11 +277,11 @@ void FirstPersonMovement::FixedUpdate(float fixedTimestep)
 
 	//Apply gravity to velocity
 	if (applyGravity && !grounded)
-		velVec = XMVectorSetY(velVec, XMVectorGetY(velVec) + (PhysicsManager::GetInstance()->GetGravity() * fixedTimestep));
+		velVec = XMVectorSetY(velVec, XMVectorGetY(velVec) + (PhysicsManager::GetInstance()->GetGravity() * Time::fixedDeltaTime()));
 
 	//Apply velocity to displacement
 	XMVECTOR displacementVec = XMVectorSet(0, 0, 0, 0);
-	displacementVec = XMVectorAdd(displacementVec, XMVectorScale(velVec, fixedTimestep));
+	displacementVec = XMVectorAdd(displacementVec, XMVectorScale(velVec, Time::fixedDeltaTime()));
 
 	//Store velocity for next frame
 	XMStoreFloat3(&velocity, velVec);
@@ -288,12 +289,12 @@ void FirstPersonMovement::FixedUpdate(float fixedTimestep)
 	//Move the character
 	XMFLOAT3 displacement;
 	XMStoreFloat3(&displacement, displacementVec);
-	controller->Move(displacement, fixedTimestep, false);
+	controller->Move(displacement, Time::fixedDeltaTime(), false);
 
 	//Lerp camera to start position
 	if (cameraLerpToStart)
 	{
-		cameraT += CAMERA_LERP_SPEED * fixedTimestep;
+		cameraT += CAMERA_LERP_SPEED * Time::fixedDeltaTime();
 
 		XMFLOAT3 pos;
 		XMStoreFloat3(&pos, XMVectorLerp(XMLoadFloat3(&lastFrameCameraPos), XMLoadFloat3(&cameraBasePos), cameraT));
@@ -308,28 +309,28 @@ void FirstPersonMovement::FixedUpdate(float fixedTimestep)
 	//Apply head bob
 	else
 	{
-		ApplyHeadBob(fixedTimestep);
+		ApplyHeadBob();
 	}
 
 	//Apply FOV change
 	if ((cameraState == CameraState::Sprinting || cameraState == CameraState::Sliding) && cameraFOVT < 1)
 	{
-		cameraFOVT += fixedTimestep * SPRINT_FOV_IN_SPEED;
+		cameraFOVT += Time::fixedDeltaTime() * SPRINT_FOV_IN_SPEED;
 		camera->SetFOV(Lerp(cameraFOV, cameraFOV + SPRINT_FOV_ADDITION, cameraFOVT));
 	}
 	else if (cameraState != CameraState::Sprinting && cameraState != CameraState::Sliding && cameraFOVT > 0)
 	{
-		cameraFOVT -= fixedTimestep * SPRINT_FOV_OUT_SPEED;
+		cameraFOVT -= Time::fixedDeltaTime() * SPRINT_FOV_OUT_SPEED;
 		camera->SetFOV(Lerp(cameraFOV, cameraFOV + SPRINT_FOV_ADDITION, cameraFOVT));
 	}
 }
 
 //Detect input
-void FirstPersonMovement::Update(float deltaTime)
+void FirstPersonMovement::Update()
 {
 	//Rotate the camera to where the user is looking
 	inputManager->CaptureWindow();
-	CalculateCameraRotFromMouse(deltaTime);
+	CalculateCameraRotFromMouse();
 
 	//Detect Input first
 	movementZ = 0; //0=none, 1=W, 2=S
@@ -416,7 +417,7 @@ void FirstPersonMovement::CameraTransition(CameraState newState, float baseHeigh
 }
 
 // Apply various effects to the camera depending on the movement state
-void FirstPersonMovement::ApplyHeadBob(float fixedTimestep)
+void FirstPersonMovement::ApplyHeadBob()
 {
 	if ((cameraState == CameraState::Walking ||
 		cameraState == CameraState::Sprinting ||
@@ -432,7 +433,7 @@ void FirstPersonMovement::ApplyHeadBob(float fixedTimestep)
 
 		if (movementX != 0 || movementZ != 0)
 		{
-			cameraT += cameraDir * speed * fixedTimestep;
+			cameraT += cameraDir * speed * Time::fixedDeltaTime();
 			if (cameraT > 1)
 				cameraDir = -1;
 			else if (cameraT < 0)
@@ -440,7 +441,7 @@ void FirstPersonMovement::ApplyHeadBob(float fixedTimestep)
 		}
 		//Lerp to zero when standing still (crouching)
 		else if(cameraT > 0)
-			cameraT -= speed * fixedTimestep;
+			cameraT -= speed * Time::fixedDeltaTime();
 
 		XMFLOAT3 pos;
 		XMStoreFloat3(&pos, XMVectorLerp(XMLoadFloat3(&cameraBasePos), XMLoadFloat3(&cameraTargetPos), cameraT));
@@ -508,7 +509,7 @@ bool FirstPersonMovement::IsSliding()
 }
 
 // Calculate the camera's rotation when the player moves the mouse
-void FirstPersonMovement::CalculateCameraRotFromMouse(float deltaTime)
+void FirstPersonMovement::CalculateCameraRotFromMouse()
 {
 	static float cameraSensitivity = 0.15f;
 
@@ -565,7 +566,7 @@ void FirstPersonMovement::CalculateCameraRotFromMouse(float deltaTime)
 	cameraGO->SetRotation(baseRot);
 	
 	//Apply camera shake
-	cameraShaker.Update(deltaTime, baseRot);
+	cameraShaker.Update(baseRot);
 
 	SetCursorPos(centerX, centerY); //Position the mouse in the center
 	SetCursor(false);

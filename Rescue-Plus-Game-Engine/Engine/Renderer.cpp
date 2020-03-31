@@ -2,6 +2,7 @@
 #include "LightManager.h"
 #include "ResourceManager.h"
 #include "ExtendedMath.h"
+#include "Times.h"
 
 using namespace DirectX;
 
@@ -118,7 +119,7 @@ void Renderer::Draw(ID3D11DeviceContext* context,
 					ID3D11RenderTargetView* backBufferRTV,
 					ID3D11DepthStencilView* depthStencilView,
 					ID3D11SamplerState* sampler,
-					UINT width, UINT height, float deltaTime)
+					UINT width, UINT height)
 {
 	// Clear the render target and depth buffer (erases what's on the screen)
 	//  - Do this ONCE PER FRAME
@@ -136,7 +137,7 @@ void Renderer::Draw(ID3D11DeviceContext* context,
 
 	DrawSky(context, camera);
 	
-	DrawDebugShapes(context, camera, deltaTime);
+	DrawDebugShapes(context, camera);
 
 	DrawTransparentObjects(context, camera);
 
@@ -353,7 +354,7 @@ void Renderer::DrawTransparentObjects(ID3D11DeviceContext * context, Camera * ca
 
 template <typename T, typename F>
 static inline void DrawShapeList(std::vector<T>* list, F drawFunc, 
-	PrimitiveBatch<VertexPositionColor>* batch, float deltaTime)
+	PrimitiveBatch<VertexPositionColor>* batch)
 {
 	auto iter = list->end();
 	while (iter > list->begin())
@@ -362,7 +363,7 @@ static inline void DrawShapeList(std::vector<T>* list, F drawFunc,
 		drawFunc(batch, *iter, Colors::LightGreen);
 		
 		if (iter->type == ShapeDrawType::ForDuration)
-			iter->duration -= deltaTime;
+			iter->duration -= Time::deltaTime();
 		//Erase objs that need to be
 		if (iter->type == ShapeDrawType::SingleFrame ||
 			(iter->type == ShapeDrawType::ForDuration && iter->duration <= 0))
@@ -370,7 +371,7 @@ static inline void DrawShapeList(std::vector<T>* list, F drawFunc,
 	}
 }
 // Draw debug shapes
-void Renderer::DrawDebugShapes(ID3D11DeviceContext* context, Camera* camera, float deltaTime)
+void Renderer::DrawDebugShapes(ID3D11DeviceContext* context, Camera* camera)
 {
 	if (debugCubes.size() < 1 && debugSpheres.size() < 1 && debugCapsules.size() < 1
 		&& debugRays.size() < 1)
@@ -389,10 +390,10 @@ void Renderer::DrawDebugShapes(ID3D11DeviceContext* context, Camera* camera, flo
 	//Do the actual drawing
 	db_batch->Begin();
 
-	DrawShapeList<ShapeXMFloat3Data>(&debugCubes, &DrawCube, db_batch.get(), deltaTime);
-	DrawShapeList<ShapeFloat1Data>(&debugSpheres, &DrawSphere, db_batch.get(), deltaTime);
-	DrawShapeList<ShapeXMFloat2Data>(&debugCapsules, &DrawCapsule, db_batch.get(), deltaTime);
-	DrawShapeList<ShapeFloat1Data>(&debugRays, &DrawRay, db_batch.get(), deltaTime);
+	DrawShapeList<ShapeXMFloat3Data>(&debugCubes, &DrawCube, db_batch.get());
+	DrawShapeList<ShapeFloat1Data>(&debugSpheres, &DrawSphere, db_batch.get());
+	DrawShapeList<ShapeXMFloat2Data>(&debugCapsules, &DrawCapsule, db_batch.get());
+	DrawShapeList<ShapeFloat1Data>(&debugRays, &DrawRay, db_batch.get());
 
 	db_batch->End();
 

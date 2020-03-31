@@ -1,5 +1,6 @@
 #include "T_FlashStrike.h"
 #include "Player.h"
+#include "Times.h"
 
 using namespace DirectX;
 
@@ -26,7 +27,7 @@ PowerPrevent T_FlashStrike::Activate(Player& player, short& currentJuice)
 // Hold behaviour
 PowerPrevent T_FlashStrike::Hold(Player& player, short& currentJuice)
 {
-	timer += deltaTime;
+	timer += Time::deltaTime();
 	return PowerPrevent::Movement;
 }
 

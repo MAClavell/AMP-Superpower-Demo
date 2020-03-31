@@ -29,9 +29,9 @@ public:
 	// will be called automatically
 	void Init();
 	void OnResize();
-	void FixedUpdate(float constantStepSize, float totalTime);
-	void Update(float deltaTime, float totalTime);
-	void Draw(float deltaTime, float totalTime);
+	void FixedUpdate();
+	void Update();
+	void Draw();
 
 	// Overridden mouse input helper methods
 	void OnMouseDown (WPARAM buttonState, int x, int y);

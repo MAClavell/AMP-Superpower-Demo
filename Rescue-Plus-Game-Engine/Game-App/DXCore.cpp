@@ -2,6 +2,11 @@
 
 #include <WindowsX.h>
 #include <sstream>
+#include "Times.h"
+
+float Time::m_deltaTime = 0;
+float Time::m_fixedDeltaTime = 0;
+float Time::m_totalTime = 0;
 
 // Define the static instance variable so our OS-level 
 // message handling function below can talk to our object
@@ -52,6 +57,9 @@ DXCore::DXCore(
 	fpsTimeElapsed = 0.0f;
 	statsTimeElapsed = 0.0f;
 	maxFrameRate = 1 / 60.0f;
+
+	//Fixed update FPS (Ex: 60)
+	Time::setFixedDeltaTime(1.0f / 60);
 	
 	device = 0;
 	context = 0;
@@ -374,7 +382,7 @@ HRESULT DXCore::Run()
 		{
 			// Only update the game at a set rate
 			UpdateTimer();
-			float timeDiff = totalTime - fpsTimeElapsed;
+			float timeDiff = Time::totalTime() - fpsTimeElapsed;
 			if (timeDiff >= maxFrameRate)
 			{
 				fpsTimeElapsed += timeDiff;
@@ -386,16 +394,16 @@ HRESULT DXCore::Run()
 
 				//Fixed update
 				static float accumulator = 0.0f;
-				accumulator += deltaTime;
-				while (accumulator >= fixedUpdateStepSize)
+				accumulator += Time::deltaTime();
+				while (accumulator >= Time::fixedDeltaTime())
 				{
-					accumulator -= fixedUpdateStepSize;
-					FixedUpdate(fixedUpdateStepSize, totalTime);
+					accumulator -= Time::fixedDeltaTime();
+					FixedUpdate();
 				}
 
 				// The normal game loop
-				Update(deltaTime, totalTime);
-				Draw(deltaTime, totalTime);
+				Update();
+				Draw();
 			}
 		}
 	}
@@ -428,7 +436,7 @@ void DXCore::UpdateTimer()
 	currentTime = now;
 
 	// Calculate the total time from start to now
-	totalTime = (float)((currentTime - startTime) * perfCounterSeconds);
+	Time::setTotalTime((float)((currentTime - startTime) * perfCounterSeconds));
 }
 
 // --------------------------------------------------------
@@ -440,7 +448,7 @@ void DXCore::UpdateFps()
 	// Calculate delta time and clamp to zero
 	//  - Could go negative if CPU goes into power save mode 
 	//    or the process itself gets moved to another core
-	deltaTime = max((float)((currentTime - previousTime) * perfCounterSeconds), 0.0f);
+	Time::setDeltaTime(max((float)((currentTime - previousTime) * perfCounterSeconds), 0.0f));
 
 	// Save current time for next frame
 	previousTime = currentTime;
@@ -460,7 +468,7 @@ void DXCore::UpdateFps()
 void DXCore::UpdateTitleBarStats()
 {
 	// Only calc FPS and update title bar once per second
-	float timeDiff = totalTime - statsTimeElapsed;
+	float timeDiff = Time::totalTime() - statsTimeElapsed;
 	if (timeDiff < 1.0f)
 		return;
 

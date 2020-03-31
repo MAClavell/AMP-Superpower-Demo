@@ -303,12 +303,12 @@ public:
 	// --------------------------------------------------------
 	// Update all componenets in this gameObject
 	// --------------------------------------------------------
-	void Update(float deltaTime);
+	void Update();
 
 	// --------------------------------------------------------
 	// Update all componenets in this gameObject
 	// --------------------------------------------------------
-	void FixedUpdate(float deltaTime);
+	void FixedUpdate();
 
 	// --------------------------------------------------------
 	// Get the world matrix for this GameObject (rebuilding if necessary)

@@ -77,7 +77,7 @@ void RigidBody::FindChildrenColliders(GameObject* go, bool firstObj)
 	}
 }
 
-void RigidBody::FixedUpdate(float deltaTime)
+void RigidBody::FixedUpdate()
 {
 	collisionResolver->ResolveCollisions(gameObject());
 }

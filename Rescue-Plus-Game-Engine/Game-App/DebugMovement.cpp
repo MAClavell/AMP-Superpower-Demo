@@ -1,5 +1,6 @@
 #include "DebugMovement.h"
 #include "ExtendedMath.h"
+#include "Time.h"
 
 using namespace DirectX;
 
@@ -14,44 +15,44 @@ DebugMovement::~DebugMovement()
 { }
 
 // Update the camera (runs every frame)
-void DebugMovement::Update(float deltaTime)
+void DebugMovement::Update()
 {
-	Movement(deltaTime);
+	Movement();
 }
 
 // Move the GameObject
-void DebugMovement::Movement(float deltaTime)
+void DebugMovement::Movement()
 {
 	XMFLOAT3 movement = XMFLOAT3();
 
 	//Relative Z movement
 	if (inputManager->GetKey(Key::W))
 	{
-		movement.z += moveSpeed * deltaTime;
+		movement.z += moveSpeed * Time::deltaTime();
 	}
 	else if (inputManager->GetKey(Key::S))
 	{
-		movement.z -= moveSpeed * deltaTime;
+		movement.z -= moveSpeed * Time::deltaTime();
 	}
 
 	//Relative X movement
 	if (inputManager->GetKey(Key::D))
 	{
-		movement.x += moveSpeed * deltaTime;
+		movement.x += moveSpeed * Time::deltaTime();
 	}
 	else if (inputManager->GetKey(Key::A))
 	{
-		movement.x -= moveSpeed * deltaTime;
+		movement.x -= moveSpeed * Time::deltaTime();
 	}
 
 	//Absolute Y movement
 	if (inputManager->GetKey(Key::Q))
 	{
-		gameObject()->MoveAbsolute(XMFLOAT3(0, +moveSpeed * deltaTime, 0));
+		gameObject()->MoveAbsolute(XMFLOAT3(0, +moveSpeed * Time::deltaTime(), 0));
 	}
 	else if (inputManager->GetKey(Key::E))
 	{
-		gameObject()->MoveAbsolute(XMFLOAT3(0, -moveSpeed * deltaTime, 0));
+		gameObject()->MoveAbsolute(XMFLOAT3(0, -moveSpeed * Time::deltaTime(), 0));
 	}
 
 	// Rotate the movement vector

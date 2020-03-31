@@ -10,6 +10,6 @@ public:
 	ShipyardCrane(GameObject* gameObject, GameObject* hook);
 	~ShipyardCrane();
 
-	void Update(float deltaTime) override;
+	void Update() override;
 };
 

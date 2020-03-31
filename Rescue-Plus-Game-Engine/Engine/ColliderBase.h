@@ -48,7 +48,7 @@ protected:
 	// --------------------------------------------------------
 	// Update debug view
 	// --------------------------------------------------------
-	virtual void Update(float deltaTime) override = 0;
+	virtual void Update() override = 0;
 
 	// --------------------------------------------------------
 	// Abstract function to set filter data
@@ -61,7 +61,7 @@ public:
 	// --------------------------------------------------------
 	// Update collisions
 	// --------------------------------------------------------
-	virtual void FixedUpdate(float deltaTime) override = 0;
+	virtual void FixedUpdate() override = 0;
 
 	// --------------------------------------------------------
 	// Get the type of collider this is

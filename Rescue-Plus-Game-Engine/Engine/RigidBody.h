@@ -42,7 +42,7 @@ public:
 	// --------------------------------------------------------
 	// Update collisions
 	// --------------------------------------------------------
-	void FixedUpdate(float deltaTime) override;
+	void FixedUpdate() override;
 
 	// --------------------------------------------------------
 	// Update the gameobject's world position from an inputted transform

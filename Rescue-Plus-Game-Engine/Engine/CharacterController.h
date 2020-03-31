@@ -42,18 +42,18 @@ public:
 	// Move the character by a displacement (in world coordinates)
 	// --------------------------------------------------------
 	CharacterControllerCollisionFlags Move(
-		DirectX::XMFLOAT3 displacement, float deltaTime, 
+		DirectX::XMFLOAT3 displacement, 
 		bool applyGravity = true, float gravityScale = 1);
 
 	// --------------------------------------------------------
 	// Update debug view
 	// --------------------------------------------------------
-	void Update(float deltaTime) override;
+	void Update() override;
 
 	// --------------------------------------------------------
 	// Update collisions
 	// --------------------------------------------------------
-	void FixedUpdate(float deltaTime) override;
+	void FixedUpdate() override;
 
 	// --------------------------------------------------------
 	// Get the foot position of the character controller

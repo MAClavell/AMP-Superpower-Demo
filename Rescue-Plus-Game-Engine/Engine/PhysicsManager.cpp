@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "Raycast.h"
 #include "CharacterController.h"
+#include "Times.h"
 
 using namespace physx;
 using namespace DirectX;
@@ -253,9 +254,9 @@ static void UpdateRigidBody(Job* job, const void* userData)
 	}
 }
 
-bool PhysicsManager::Simulate(float deltaTime)
+bool PhysicsManager::Simulate()
 {
-	scene->simulate(deltaTime);
+	scene->simulate(Time::fixedDeltaTime());
 	scene->fetchResults(true);
 
 	// retrieve array of actors that moved

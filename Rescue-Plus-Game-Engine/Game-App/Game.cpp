@@ -173,16 +173,16 @@ void Game::OnResize()
 // --------------------------------------------------------
 // Update your game at a fixed time interval here - physics
 // --------------------------------------------------------
-void Game::FixedUpdate(float constantStepSize, float totalTime)
+void Game::FixedUpdate()
 {
 	if (!inputManager->IsWindowFocused())
 		return;
 
 	//Update physics
-	physicsManager->Simulate(constantStepSize);
+	physicsManager->Simulate();
 
 	//FixedUpdate entities
-	entityManager->FixedUpdate(constantStepSize);
+	entityManager->FixedUpdate();
 
 	//Delete finished jobs
 	JobSystem::DeleteFinishedJobs();
@@ -191,7 +191,7 @@ void Game::FixedUpdate(float constantStepSize, float totalTime)
 // --------------------------------------------------------
 // Update your game here - user input, move objects, AI, etc.
 // --------------------------------------------------------
-void Game::Update(float deltaTime, float totalTime)
+void Game::Update()
 {
 	inputManager->UpdateFocus();
 	if (!inputManager->IsWindowFocused())
@@ -209,7 +209,7 @@ void Game::Update(float deltaTime, float totalTime)
 		Quit();
 
 	//Update all entities
-	entityManager->Update(deltaTime);
+	entityManager->Update();
 
 	if (inputManager->GetKey(Key::G))
 	{
@@ -238,10 +238,10 @@ void Game::Update(float deltaTime, float totalTime)
 // --------------------------------------------------------
 // Clear the screen, redraw everything, present to the user
 // --------------------------------------------------------
-void Game::Draw(float deltaTime, float totalTime)
+void Game::Draw()
 {
 	//Draw all entities in the renderer
-	renderer->Draw(context, device, camera, backBufferRTV, depthStencilView, samplerState, width, height, deltaTime);
+	renderer->Draw(context, device, camera, backBufferRTV, depthStencilView, samplerState, width, height);
 
 	// Present the back buffer to the user
 	//  - Puts the final frame we're drawing into the window so the user can see it

@@ -1,6 +1,7 @@
 #include "CameraShaker.h"
 #include <algorithm>
 #include "PerlinNoise.h"
+#include "Times.h"
 
 using namespace DirectX;
 
@@ -18,7 +19,7 @@ CameraShaker::CameraShaker(GameObject* camera, float intensity)
 	trauma = 0;
 }
 
-void CameraShaker::Update(float deltaTime, XMFLOAT3 baseRotation)
+void CameraShaker::Update(XMFLOAT3 baseRotation)
 {
 	if (trauma <= 0)
 		return;
@@ -32,12 +33,12 @@ void CameraShaker::Update(float deltaTime, XMFLOAT3 baseRotation)
 	camera->SetRotation(baseRotation);
 
 	//Reduce trauma by deltaTime
-	trauma -= deltaTime * 2;
+	trauma -= Time::deltaTime() * 2;
 
 	//Clamp is always between 0 and 1
 	trauma = std::clamp(trauma, 0.0f, 1.0f);
 
-	time += (double)deltaTime * 2;
+	time += (double)Time::deltaTime() * 2;
 }
 
 void CameraShaker::AddTrauma(float traumaToAdd)

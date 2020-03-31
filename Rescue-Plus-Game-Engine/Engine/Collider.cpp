@@ -190,7 +190,7 @@ void Collider::FindParentRigidBody()
 }
 
 // Update collisions
-void Collider::FixedUpdate(float deltaTime)
+void Collider::FixedUpdate()
 {
 	if(staticActor != nullptr)
 		collisionResolver->ResolveCollisions(gameObject());
@@ -480,7 +480,7 @@ physx::PxShape* BoxCollider::GenerateShape(PxPhysics* physics)
 }
 
 // Update debug view
-void BoxCollider::Update(float deltaTime)
+void BoxCollider::Update()
 {
 	if (debug)
 	{
@@ -551,7 +551,7 @@ void SphereCollider::SetRadius(float radius)
 }
 
 // Update debug view
-void SphereCollider::Update(float deltaTime)
+void SphereCollider::Update()
 {
 	if (debug)
 	{
@@ -668,7 +668,7 @@ void CapsuleCollider::SetCapsuleDirection(CapsuleDirection dir)
 }
 
 // Update debug view
-void CapsuleCollider::Update(float deltaTime)
+void CapsuleCollider::Update()
 {
 	if (debug)
 	{

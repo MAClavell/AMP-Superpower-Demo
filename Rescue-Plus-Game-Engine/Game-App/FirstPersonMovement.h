@@ -59,7 +59,7 @@ private:
 	// --------------------------------------------------------
 	// Apply various effects to the camera depending on the movement state
 	// --------------------------------------------------------
-	void ApplyHeadBob(float fixedTimestep);
+	void ApplyHeadBob();
 
 	// --------------------------------------------------------
 	// Changes for when we start a sprint
@@ -95,14 +95,14 @@ private:
 	// --------------------------------------------------------
 	// Calculate the camera's rotation when the player moves the mouse
 	// --------------------------------------------------------
-	void CalculateCameraRotFromMouse(float deltaTime);
+	void CalculateCameraRotFromMouse();
 	
 public:
 	FirstPersonMovement(GameObject* gameObject);
 	~FirstPersonMovement();
 
-	void FixedUpdate(float fixedTimestep) override;
-	void Update(float deltaTime) override;
+	void FixedUpdate() override;
+	void Update() override;
 
 	// --------------------------------------------------------
 	// Factory function to safely create a First Person Movement object

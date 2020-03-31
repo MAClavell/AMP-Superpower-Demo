@@ -28,8 +28,8 @@ public:
 	Player(GameObject* gameObject);
 	~Player();
 
-	void FixedUpdate(float fixedTimestep) override;
-	void Update(float deltaTime) override;
+	void FixedUpdate() override;
+	void Update() override;
 
 	// --------------------------------------------------------
 	// Get the camera attached to this player

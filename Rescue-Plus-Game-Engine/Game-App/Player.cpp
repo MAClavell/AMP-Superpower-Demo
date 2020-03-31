@@ -40,14 +40,14 @@ Player* Player::PlayerFactory(const char* name, int screenWidth, int screenHeigh
 	return player;
 }
 
-void Player::FixedUpdate(float fixedTimestep)
+void Player::FixedUpdate()
 {
 	//Move the player from powers
 	if (equippedPower != nullptr)
 		equippedPower->MoveCharacter(*this);
 }
 
-void Player::Update(float deltaTime)
+void Player::Update()
 {
 	PowerPrevent prevent = PowerPrevent::Nothing;
 

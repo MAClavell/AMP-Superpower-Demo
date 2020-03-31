@@ -153,20 +153,20 @@ void GameObject::GetCollisionAndTriggerCallbackComponents(vector<UserComponent*>
 }
 
 // Update this gameobject's components
-void GameObject::Update(float deltaTime)
+void GameObject::Update()
 { 
 	for (auto c : updateComponents)
 	{
-		c->Update(deltaTime);
+		c->Update();
 	}
 }
 
 // Update this gameobject's components at the fixed timestep
-void GameObject::FixedUpdate(float deltaTime)
+void GameObject::FixedUpdate()
 {
 	for (auto c : fixedUpdateComponents)
 	{
-		c->FixedUpdate(deltaTime);
+		c->FixedUpdate();
 	}
 }
 

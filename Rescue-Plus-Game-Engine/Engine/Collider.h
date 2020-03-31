@@ -89,7 +89,7 @@ public:
 	// --------------------------------------------------------
 	// Update collisions
 	// --------------------------------------------------------
-	void FixedUpdate(float deltaTime) override;
+	void FixedUpdate() override;
 
 	// --------------------------------------------------------
 	// Get the rigidbody this collider is attached to (null if none)
@@ -157,7 +157,7 @@ public:
 	// --------------------------------------------------------
 	// Update debug view
 	// --------------------------------------------------------
-	void Update(float deltaTime) override;
+	void Update() override;
 
 	// --------------------------------------------------------
 	// Get the size of the BoxCollider
@@ -192,7 +192,7 @@ public:
 	// --------------------------------------------------------
 	// Update debug view
 	// --------------------------------------------------------
-	void Update(float deltaTime) override;
+	void Update() override;
 
 	// --------------------------------------------------------
 	// Get the radius of the SphereCollider
@@ -229,7 +229,7 @@ public:
 	// --------------------------------------------------------
 	// Update debug view
 	// --------------------------------------------------------
-	void Update(float deltaTime) override;
+	void Update() override;
 
 	// --------------------------------------------------------
 	// Get the radius of the CapsuleCollider

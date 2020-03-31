@@ -1,4 +1,5 @@
 #include "EntityManager.h"
+#include "Time.h"
 
 // Releases the entities in the Entity Manager
 void EntityManager::Release()
@@ -85,14 +86,14 @@ void EntityManager::RemoveEntity(GameObject* entity, bool deleteEntity)
 }
 
 // Run FixedUpdate() for all entities in the manager
-void EntityManager::FixedUpdate(float deltaTime)
+void EntityManager::FixedUpdate()
 {
 	//Update entities
 	for (size_t i = 0; i < entities.size(); i++)
 	{
 		if (entities[i] && entities[i]->GetEnabled())
 		{
-			entities[i]->FixedUpdate(deltaTime);
+			entities[i]->FixedUpdate();
 		}
 	}
 
@@ -105,14 +106,14 @@ void EntityManager::FixedUpdate(float deltaTime)
 }
 
 // Run Update() for all entities in the manager
-void EntityManager::Update(float deltaTime)
+void EntityManager::Update()
 {
 	//Update entities
 	for (size_t i = 0; i < entities.size(); i++)
 	{
 		if (entities[i] && entities[i]->GetEnabled())
 		{
-			entities[i]->Update(deltaTime);
+			entities[i]->Update();
 		}
 	}
 

@@ -12,7 +12,7 @@ TestBullet::TestBullet(GameObject* gameObject) : UserComponent(gameObject)
 	inputManager = InputManager::GetInstance();
 }
 
-void TestBullet::Update(float deltaTime)
+void TestBullet::Update()
 {
 	//Temp workaround until I get input manager working fully
 	if (inputManager->GetKeyDown(Key::F))

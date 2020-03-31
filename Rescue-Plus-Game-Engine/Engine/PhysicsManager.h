@@ -75,7 +75,7 @@ public:
 	// --------------------------------------------------------
 	// Simulate a step in the physics sim
 	// --------------------------------------------------------
-	bool Simulate(float deltaTime);
+	bool Simulate();
 
 	// --------------------------------------------------------
 	// Get the physx Physics of this world

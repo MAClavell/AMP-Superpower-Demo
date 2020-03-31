@@ -97,7 +97,7 @@ public:
 	// --------------------------------------------------------
 	// Draw debug shapes
 	// --------------------------------------------------------
-	void DrawDebugShapes(ID3D11DeviceContext* context, Camera* camera, float deltaTime);
+	void DrawDebugShapes(ID3D11DeviceContext* context, Camera* camera);
 
 	// --------------------------------------------------------
 	// Get the singleton instance of the renderer
@@ -136,8 +136,7 @@ public:
 		      ID3D11DepthStencilView* depthStencilView,
 			  ID3D11SamplerState* sampler,
 			  UINT width,
-		      UINT height,
-			  float deltaTIme
+		      UINT height
 	);
 
 	// --------------------------------------------------------

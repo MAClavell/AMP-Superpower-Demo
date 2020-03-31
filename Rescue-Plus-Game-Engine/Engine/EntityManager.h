@@ -69,10 +69,10 @@ public:
 	// --------------------------------------------------------
 	// Run Update() for all entities in the manager
 	// --------------------------------------------------------
-	void Update(float deltaTime);
+	void Update();
 
 	// --------------------------------------------------------
 	// Run FixedUpdate() for all entities in the manager
 	// --------------------------------------------------------
-	void FixedUpdate(float deltaTime);
+	void FixedUpdate();
 };

@@ -30,7 +30,7 @@ public:
 		float floorHeight);
 	~TargetDummy() { };
 
-	void Update(float deltaTime) override;
+	void Update() override;
 
 	// --------------------------------------------------------
 	// Apply damage to the target dummy

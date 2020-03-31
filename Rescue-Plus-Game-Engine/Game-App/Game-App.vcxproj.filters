@@ -89,6 +89,9 @@
     <ClCompile Include="TargetDummy.cpp">
       <Filter>Source Files\UserComponents</Filter>
     </ClCompile>
+    <ClCompile Include="T_FlashStrike.cpp">
+      <Filter>Source Files\Powers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DXCore.h">
@@ -132,6 +135,9 @@
     </ClInclude>
     <ClInclude Include="TargetDummy.h">
       <Filter>Header Files\UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="T_FlashStrike.h">
+      <Filter>Header Files\Powers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
