@@ -44,6 +44,7 @@ private:
 	bool jump;
 
 	//Control
+	bool controlsActive;
 	bool sprinting;
 	bool crouching;
 	bool grounded;
@@ -125,5 +126,15 @@ public:
 	// Get the height of the character controller
 	// --------------------------------------------------------
 	float GetHeight();
+
+	// --------------------------------------------------------
+	// Set whether controls are active and can be used to move this controller
+	// --------------------------------------------------------
+	void SetControlsActive(bool active);
+
+	// --------------------------------------------------------
+	// Get whether controls are active and can be used to move this controller
+	// --------------------------------------------------------
+	bool GetControlsActive();
 };
 

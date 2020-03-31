@@ -1,8 +1,7 @@
 #pragma once
-#include <vector>
+#include <unordered_map>
 
-enum class PowerSlot { Primary, Secondary, Tertiary };
-enum class PowerPrevent { Nothing, Powers, Movement };
+enum class PowerPrevent { Nothing, Movement };
 
 class Player;
 
@@ -45,7 +44,7 @@ __interface IPower
 	//
 	// return PowerPrevent - What the character should do after this power runs
 	// --------------------------------------------------------
-	virtual PowerPrevent Update(Player& player, PowerSlot slot, short& currentJuice) = 0;
+	virtual PowerPrevent Update(Player& player, short& currentJuice) = 0;
 
 	// --------------------------------------------------------
 	// Call this function to move the character controller according to this power or trick
@@ -62,13 +61,25 @@ class Power : public IPower
 {
 protected:
 	bool canUse = true;
-	std::vector<IPower> tricks;
-	std::vector<IEnhancement> enhancements;
+	std::unordered_map<std::string, IPower*> tricks;
+	std::unordered_map<std::string, IEnhancement*> enhancements;
 
 	Power() { };
 
 public:
-	~Power() { };
+	virtual ~Power() 
+	{
+		for (auto t : tricks)
+		{
+			if(t.second != nullptr)
+				delete t.second;
+		}
+		for (auto e : enhancements)
+		{
+			if(e.second != nullptr)
+				delete e.second;
+		}
+	};
 
 	// --------------------------------------------------------
 	// Get if this power can be used

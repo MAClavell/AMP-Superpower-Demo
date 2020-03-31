@@ -1,27 +1,16 @@
 #pragma once
+#include "GameObject.h"
 #include "Power.h"
-#include "InputManager.h"
-#include "Raycast.h"
 
-class P_Teleportation : public Power
+class T_FlashStrike : public IPower
 {
+private:
+	DirectX::XMFLOAT3 originalPosition;
 	DirectX::XMFLOAT3 teleportPosition;
-	InputManager* inputManager;
-	PowerPrevent prevent;
-	CollisionLayers layers;
-	float maxRange;
+	float timer;
 	bool active;
 	bool teleport;
-	bool flashStrikeActive;
 
-private:
-
-	// --------------------------------------------------------
-	// Activate behaviour
-	//
-	// return PowerPrevent - What the character should do after this function returns
-	// --------------------------------------------------------
-	PowerPrevent Activate(Player& player, short& currentJuice) override;
 
 	// --------------------------------------------------------
 	// Hold behaviour
@@ -38,9 +27,14 @@ private:
 	PowerPrevent Stop(Player& player, short& currentJuice) override;
 
 public:
+	T_FlashStrike();
 
-	P_Teleportation();
-	~P_Teleportation();
+	// --------------------------------------------------------
+	// Activate behaviour
+	//
+	// return PowerPrevent - What the character should do after this function returns
+	// --------------------------------------------------------
+	PowerPrevent Activate(Player& player, short& currentJuice) override;
 
 	// --------------------------------------------------------
 	// Update the power, running activate, hold, and stop behaviour

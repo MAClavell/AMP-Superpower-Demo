@@ -334,20 +334,20 @@ void FirstPersonMovement::Update(float deltaTime)
 	//Detect Input first
 	movementZ = 0; //0=none, 1=W, 2=S
 	movementX = 0; //0=none, 1=D, 2=A
-	if (inputManager->GetKey(Key::W))
+	if (controlsActive && inputManager->GetKey(Key::W))
 		movementZ = 1;
-	else if (inputManager->GetKey(Key::S))
+	else if (controlsActive && inputManager->GetKey(Key::S))
 		movementZ = 2;
-	if (inputManager->GetKey(Key::D))
+	if (controlsActive && inputManager->GetKey(Key::D))
 		movementX = 1;
-	else if (inputManager->GetKey(Key::A))
+	else if (controlsActive && inputManager->GetKey(Key::A))
 		movementX = 2;
 
 	//Sprint check
 	//Don't have to hold the sprint buttons down
 	//Must be moving forward
 	//Toggle
-	if (grounded && inputManager->GetKeyDown(Key::LeftShift) && !sprinting && movementZ == 1)
+	if (controlsActive && grounded && inputManager->GetKeyDown(Key::LeftShift) && !sprinting && movementZ == 1)
 	{
 		if (crouching)
 			EndCrouch();
@@ -361,7 +361,7 @@ void FirstPersonMovement::Update(float deltaTime)
 
 	//Crouch check
 	//Toggle
-	if (grounded && inputManager->GetKeyDown(Key::LeftControl))
+	if (controlsActive && grounded && inputManager->GetKeyDown(Key::LeftControl))
 	{
 		//If we are sprinting, start a slide
 		if (crouching)
@@ -382,7 +382,7 @@ void FirstPersonMovement::Update(float deltaTime)
 	}
 
 	//Jumping
-	if (grounded && inputManager->GetKeyDown(Key::Space))
+	if (controlsActive && grounded && inputManager->GetKeyDown(Key::Space))
 	{
 		if (crouching)
 			EndCrouch();
@@ -586,4 +586,14 @@ ColliderBase* FirstPersonMovement::GetColliderBase()
 float FirstPersonMovement::GetHeight()
 {
 	return controller->GetHeight();
+}
+
+void FirstPersonMovement::SetControlsActive(bool active)
+{
+	controlsActive = active;
+}
+
+bool FirstPersonMovement::GetControlsActive()
+{
+	return controlsActive;
 }

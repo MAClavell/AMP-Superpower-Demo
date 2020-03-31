@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Renderer.h"
 #include "PhysicsManager.h"
+#include "T_FlashStrike.h"
 
 using namespace DirectX;
 
@@ -13,8 +14,12 @@ P_Teleportation::P_Teleportation()
 	maxRange = 30;
 	active = false;
 	teleport = false;
+	flashStrikeActive = false;
 	layers = CollisionLayers(true);
 	layers.Unset(CollisionLayer::Player);
+
+	//Add tricks
+	tricks.insert({ "FlashStrike", new T_FlashStrike() });
 }
 
 P_Teleportation::~P_Teleportation()
@@ -99,22 +104,37 @@ PowerPrevent P_Teleportation::Stop(Player& player, short& currentJuice)
 }
 
 // Update the power, running activate, hold, and stop behaviour
-PowerPrevent P_Teleportation::Update(Player& player, PowerSlot slot, short& currentJuice)
+PowerPrevent P_Teleportation::Update(Player& player, short& currentJuice)
 {
 	prevent = PowerPrevent::Nothing;
 
 	//Activate
-	if (inputManager->GetMouseButtonDown(MouseButtons::R))
+	if (!active && !flashStrikeActive && inputManager->GetMouseButtonDown(MouseButtons::R))
 	{
 		prevent = Activate(player, currentJuice);
 	}
 	//Deactivate
-	else if (active && inputManager->GetMouseButtonUp(MouseButtons::R))
+	else if (active && !flashStrikeActive && inputManager->GetMouseButtonUp(MouseButtons::R))
 	{
 		prevent = Stop(player, currentJuice);
 	}
+	//Left mouse pressed, so perform the flash strike trick
+	else if (active && !flashStrikeActive && inputManager->GetMouseButtonDown(MouseButtons::L))
+	{
+		prevent = tricks["FlashStrike"]->Activate(player, currentJuice);
+		flashStrikeActive = true;
+	}
+	else if (active && flashStrikeActive)
+	{
+		prevent = tricks["FlashStrike"]->Update(player, currentJuice);
+		if (prevent == PowerPrevent::Nothing)
+		{
+			flashStrikeActive = false;
+			active = false;
+		}
+	}
 	//Holding button down
-	else if (active)
+	else if (active && !flashStrikeActive)
 	{
 		prevent = Hold(player, currentJuice);
 	}
@@ -130,6 +150,10 @@ bool P_Teleportation::MoveCharacter(Player& player)
 		player.gameObject()->SetPosition(teleportPosition);
 		teleport = false;
 		return true;
+	}
+	else if (flashStrikeActive)
+	{
+		return tricks["FlashStrike"]->MoveCharacter(player);
 	}
 	return false;
 }

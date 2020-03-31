@@ -11,6 +11,7 @@ Player::Player(GameObject* gameObject) : UserComponent(gameObject)
 	primary = new P_Teleportation();
 	secondary = nullptr;
 	tertiary = nullptr;
+	equippedPower = primary;
 }
 
 Player::~Player() 
@@ -42,23 +43,21 @@ Player* Player::PlayerFactory(const char* name, int screenWidth, int screenHeigh
 void Player::FixedUpdate(float fixedTimestep)
 {
 	//Move the player from powers
-	if (primary != nullptr)
-		primary->MoveCharacter(*this);
-	if (secondary != nullptr)
-		secondary->MoveCharacter(*this);
-	if (tertiary != nullptr)
-		secondary->MoveCharacter(*this);
+	if (equippedPower != nullptr)
+		equippedPower->MoveCharacter(*this);
 }
 
 void Player::Update(float deltaTime)
 {
+	PowerPrevent prevent = PowerPrevent::Nothing;
+
 	//Update all the powers
-	if (primary != nullptr)
-		primary->Update(*this, PowerSlot::Primary, currentJuice);
-	if (secondary != nullptr)
-		secondary->Update(*this, PowerSlot::Secondary, currentJuice);
-	if (tertiary != nullptr)
-		tertiary->Update(*this, PowerSlot::Tertiary, currentJuice);
+	if (equippedPower != nullptr)
+		prevent = equippedPower->Update(*this, currentJuice);
+
+	if (prevent == PowerPrevent::Movement)
+		fpm->SetControlsActive(false);
+	else fpm->SetControlsActive(true);
 }
 
 // Get the camera attached to this player
