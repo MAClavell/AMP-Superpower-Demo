@@ -13,6 +13,7 @@ class P_Teleportation : public Power
 	bool active;
 	bool teleport;
 	bool flashStrikeActive;
+	GameObject* hitEnemy;
 
 private:
 

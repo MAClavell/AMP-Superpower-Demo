@@ -56,8 +56,20 @@ void Player::Update()
 		prevent = equippedPower->Update(*this, currentJuice);
 
 	if (prevent == PowerPrevent::Movement)
+	{
 		fpm->SetControlsActive(false);
-	else fpm->SetControlsActive(true);
+		fpm->SetCameraControlsActive(true);
+	}
+	else if (prevent == PowerPrevent::MovementAndCamera)
+	{
+		fpm->SetControlsActive(false);
+		fpm->SetCameraControlsActive(false);
+	}
+	else
+	{
+		fpm->SetControlsActive(true);
+		fpm->SetCameraControlsActive(true);
+	}
 }
 
 // Get the camera attached to this player

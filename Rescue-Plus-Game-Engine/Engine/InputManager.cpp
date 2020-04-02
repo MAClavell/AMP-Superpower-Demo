@@ -219,15 +219,15 @@ bool InputManager::GetMouseButtonUp(MouseButtons button)
 	switch (button)
 	{
 		case MouseButtons::L:
-			return !mb_L_Down && !prev_MB_L_Down;
+			return !mb_L_Down && prev_MB_L_Down;
 			break;
 
 		case MouseButtons::R:
-			return !mb_R_Down && !prev_MB_R_Down;
+			return !mb_R_Down && prev_MB_R_Down;
 			break;
 
 		case MouseButtons::M:
-			return !mb_M_Down && !prev_MB_M_Down;
+			return !mb_M_Down && prev_MB_M_Down;
 			break;
 
 		default:

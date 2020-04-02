@@ -41,14 +41,20 @@ PowerPrevent P_Teleportation::Hold(Player& player, short& currentJuice)
 	//Repeatedly raycast to see if we have a valid position
 	float rangeMod = 0;
 	float halfHeight = player.GetHeight() / 2;
+	hitEnemy = nullptr;
 	while (true)
 	{
 		RaycastHit hit;
 		if (Raycast(cameraGO->GetPosition(),
 			cameraGO->GetForwardAxis(), &hit, maxRange - rangeMod,
-			layers, ShapeDrawType::ForDuration, 0.5f))
+			layers))
 		{
 			teleportPosition = hit.point;
+			if (hit.gameObject->GetName() == "TargetDummy")
+			{
+				hitEnemy = hit.gameObject;
+			}
+			else hitEnemy = nullptr;
 		}
 		else XMStoreFloat3(&teleportPosition, XMVectorAdd(XMLoadFloat3(&cameraGO->GetPosition()),
 			XMVectorScale(XMLoadFloat3(&cameraGO->GetForwardAxis()),
@@ -119,8 +125,9 @@ PowerPrevent P_Teleportation::Update(Player& player, short& currentJuice)
 		prevent = Stop(player, currentJuice);
 	}
 	//Left mouse pressed, so perform the flash strike trick
-	else if (active && !flashStrikeActive && inputManager->GetMouseButtonDown(MouseButtons::L))
+	else if (active && hitEnemy != nullptr && !flashStrikeActive && inputManager->GetMouseButtonDown(MouseButtons::L))
 	{
+		((T_FlashStrike*)tricks["FlashStrike"])->SendTeleportData(teleportPosition);
 		prevent = tricks["FlashStrike"]->Activate(player, currentJuice);
 		flashStrikeActive = true;
 	}
@@ -129,6 +136,7 @@ PowerPrevent P_Teleportation::Update(Player& player, short& currentJuice)
 		prevent = tricks["FlashStrike"]->Update(player, currentJuice);
 		if (prevent == PowerPrevent::Nothing)
 		{
+			((T_FlashStrike*)tricks["FlashStrike"])->ApplyDamage(*hitEnemy);
 			flashStrikeActive = false;
 			active = false;
 		}
@@ -145,15 +153,16 @@ PowerPrevent P_Teleportation::Update(Player& player, short& currentJuice)
 // Call this function to move the character controller according to this power
 bool P_Teleportation::MoveCharacter(Player& player)
 {
+	bool moved = false;
 	if (teleport)
 	{
 		player.gameObject()->SetPosition(teleportPosition);
 		teleport = false;
-		return true;
+		moved = true;
 	}
-	else if (flashStrikeActive)
+	else
 	{
-		return tricks["FlashStrike"]->MoveCharacter(player);
+		moved = tricks["FlashStrike"]->MoveCharacter(player);
 	}
-	return false;
+	return moved;
 }

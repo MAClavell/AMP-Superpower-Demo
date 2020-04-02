@@ -2,7 +2,7 @@
 #include "ExtendedMath.h"
 #include "PhysicsManager.h"
 #include "Raycast.h"
-#include "Time.h"
+#include "Times.h"
 
 using namespace DirectX;
 
@@ -52,6 +52,8 @@ FirstPersonMovement::FirstPersonMovement(GameObject* gameObject) : UserComponent
 	prevGrounded = false;
 	crouching = false;
 	applyGravity = true;
+	controlsActive = true;
+	cameraControlsActive = true;
 
 	jump = false;
 	slideState = SlideState::None;
@@ -330,7 +332,8 @@ void FirstPersonMovement::Update()
 {
 	//Rotate the camera to where the user is looking
 	inputManager->CaptureWindow();
-	CalculateCameraRotFromMouse();
+	if(cameraControlsActive)
+		CalculateCameraRotFromMouse();
 
 	//Detect Input first
 	movementZ = 0; //0=none, 1=W, 2=S
@@ -597,4 +600,14 @@ void FirstPersonMovement::SetControlsActive(bool active)
 bool FirstPersonMovement::GetControlsActive()
 {
 	return controlsActive;
+}
+
+void FirstPersonMovement::SetCameraControlsActive(bool active)
+{
+	cameraControlsActive = active;
+}
+
+bool FirstPersonMovement::GetCameraControlsActive()
+{
+	return cameraControlsActive;
 }

@@ -1,6 +1,6 @@
 #include "DebugMovement.h"
 #include "ExtendedMath.h"
-#include "Time.h"
+#include "Times.h"
 
 using namespace DirectX;
 

@@ -236,9 +236,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Lights.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="D:\Documents\GitHub\AMP-Superpower-Demo\Rescue-Plus-Game-Engine\Engine\Times.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Times.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="$(MSBuildThisFileDirectory)PS_ColDebug.hlsl">

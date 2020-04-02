@@ -45,6 +45,7 @@ private:
 
 	//Control
 	bool controlsActive;
+	bool cameraControlsActive;
 	bool sprinting;
 	bool crouching;
 	bool grounded;
@@ -136,5 +137,15 @@ public:
 	// Get whether controls are active and can be used to move this controller
 	// --------------------------------------------------------
 	bool GetControlsActive();
+
+	// --------------------------------------------------------
+	// Set whether camera controls are active and can be used to move this controller
+	// --------------------------------------------------------
+	void SetCameraControlsActive(bool active);
+
+	// --------------------------------------------------------
+	// Get whether camera controls are active and can be used to move this controller
+	// --------------------------------------------------------
+	bool GetCameraControlsActive();
 };
 

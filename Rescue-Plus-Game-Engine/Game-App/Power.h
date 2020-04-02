@@ -1,7 +1,7 @@
 #pragma once
 #include <unordered_map>
 
-enum class PowerPrevent { Nothing, Movement };
+enum class PowerPrevent { Nothing, Movement, MovementAndCamera };
 
 class Player;
 

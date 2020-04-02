@@ -382,5 +382,5 @@ void Game::SetupScene()
 
 	CreateCrane(resourceManager);
 
-	TargetDummy::TargetDummyFactory("TargetDummy1", XMFLOAT3(0, 0, -2), -2);
+	TargetDummy::TargetDummyFactory("TargetDummy", XMFLOAT3(0, 0, -2), -2);
 }
