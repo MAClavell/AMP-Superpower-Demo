@@ -4,6 +4,8 @@
 #include "PhysicsManager.h"
 #include "T_FlashStrike.h"
 
+#define FLASH_STRIKE_COST 1
+
 using namespace DirectX;
 
 P_Teleportation::P_Teleportation()
@@ -125,11 +127,12 @@ PowerPrevent P_Teleportation::Update(Player& player, short& currentJuice)
 		prevent = Stop(player, currentJuice);
 	}
 	//Left mouse pressed, so perform the flash strike trick
-	else if (active && hitEnemy != nullptr && !flashStrikeActive && inputManager->GetMouseButtonDown(MouseButtons::L))
+	else if (active && currentJuice >= FLASH_STRIKE_COST && hitEnemy != nullptr && !flashStrikeActive && inputManager->GetMouseButtonDown(MouseButtons::L))
 	{
 		((T_FlashStrike*)tricks["FlashStrike"])->SendTeleportData(teleportPosition);
 		prevent = tricks["FlashStrike"]->Activate(player, currentJuice);
 		flashStrikeActive = true;
+		currentJuice -= FLASH_STRIKE_COST;
 	}
 	else if (active && flashStrikeActive)
 	{
