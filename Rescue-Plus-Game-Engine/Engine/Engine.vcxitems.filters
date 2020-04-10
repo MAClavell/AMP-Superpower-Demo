@@ -236,7 +236,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Lights.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Times.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Times.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="$(MSBuildThisFileDirectory)PS_ColDebug.hlsl">
