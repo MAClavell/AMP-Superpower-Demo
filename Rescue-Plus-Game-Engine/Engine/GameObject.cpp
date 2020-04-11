@@ -113,11 +113,10 @@ void GameObject::RemoveChild(GameObject* child)
 		if (*iter == child)
 		{
 			//Swap with the last and pop
-			iter_swap(iter, children.end());
+			iter_swap(iter, children.end()-1);
 			children.pop_back();
 
 			//Delete
-			delete child;
 			break;
 		}
 	}

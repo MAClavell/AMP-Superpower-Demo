@@ -13,13 +13,13 @@ ShipyardCrane::ShipyardCrane(GameObject* gameObject, GameObject* hook) : UserCom
 ShipyardCrane::~ShipyardCrane()
 { }
 
-void ShipyardCrane::Update()
+void ShipyardCrane::FixedUpdate()
 {
 	static float x = 0;
 	static short mult = 1;
 
 	//Increment and reverse
-	x += SPEED * mult * Time::deltaTime();
+	x += SPEED * mult * Time::fixedDeltaTime();
 	if (abs(x) > RANGE)
 	{
 		x = mult * RANGE;

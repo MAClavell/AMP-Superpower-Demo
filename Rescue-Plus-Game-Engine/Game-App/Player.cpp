@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "P_Teleportation.h"
+#include "P_Bolt.h"
 
 Player::Player(GameObject* gameObject) : UserComponent(gameObject)
 {
@@ -9,9 +10,9 @@ Player::Player(GameObject* gameObject) : UserComponent(gameObject)
 
 	//Setup powers
 	primary = new P_Teleportation();
-	secondary = nullptr;
+	secondary = new P_Bolt();
 	tertiary = nullptr;
-	equippedPower = primary;
+	equippedPower = secondary;
 }
 
 Player::~Player() 

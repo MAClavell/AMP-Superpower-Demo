@@ -10,6 +10,6 @@ public:
 	ShipyardCrane(GameObject* gameObject, GameObject* hook);
 	~ShipyardCrane();
 
-	void Update() override;
+	void FixedUpdate() override;
 };
 

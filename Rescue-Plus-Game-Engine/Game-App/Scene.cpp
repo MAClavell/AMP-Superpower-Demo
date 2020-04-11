@@ -1,9 +1,7 @@
 #include "Game.h"
 #include "DebugMovement.h"
-#include "TestCallbacks.h"
 #include "MAT_Skybox.h"
 #include "MAT_Basic.h"
-#include "TestBullet.h"
 #include "ShipyardCrane.h"
 #include "Collider.h"
 #include "TargetDummy.h"
@@ -277,7 +275,7 @@ static void CreateCrane(ResourceManager* rm)
 
 	craneGO->MoveAbsolute(XMFLOAT3(-50, 13, 40));
 	craneGO->Rotate(0, 90, 0);
-	//craneGO->AddComponent<ShipyardCrane>(moveable);
+	craneGO->AddComponent<ShipyardCrane>(moveable);
 }
 
 static GameObject* CreateContainer(ResourceManager* rm, const char* name)

@@ -2,10 +2,11 @@
 #include "Power.h"
 #include "GameObject.h"
 #include "InputManager.h"
+#include "Bolt.h"
 
 class P_Bolt : public Power
 {
-	GameObject* bolt;
+	Bolt* bolt;
 	InputManager* inputManager;
 	PowerPrevent prevent;
 	bool active;
@@ -52,6 +53,6 @@ public:
 	//
 	// return bool - If the power moved the character
 	// --------------------------------------------------------
-	virtual bool MoveCharacter(Player& player) override {};
+	virtual bool MoveCharacter(Player& player) override { return false; };
 };
 

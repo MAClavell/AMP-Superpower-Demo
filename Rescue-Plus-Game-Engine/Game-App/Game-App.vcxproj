@@ -224,6 +224,7 @@ xcopy "$(SolutionDir)Engine\PhysX\bin\*.*" "$(TargetDir)" /Y /I /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bolt.cpp" />
     <ClCompile Include="CameraShaker.cpp" />
     <ClCompile Include="DXCore.cpp" />
     <ClCompile Include="DebugMovement.cpp" />
@@ -238,11 +239,10 @@ xcopy "$(SolutionDir)Engine\PhysX\bin\*.*" "$(TargetDir)" /Y /I /E</Command>
     <ClCompile Include="ShipyardCrane.cpp" />
     <ClCompile Include="P_Teleportation.cpp" />
     <ClCompile Include="TargetDummy.cpp" />
-    <ClCompile Include="TestBullet.cpp" />
-    <ClCompile Include="TestCallbacks.cpp" />
     <ClCompile Include="T_FlashStrike.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bolt.h" />
     <ClInclude Include="CameraShaker.h" />
     <ClInclude Include="DXCore.h" />
     <ClInclude Include="DebugMovement.h" />
@@ -256,8 +256,6 @@ xcopy "$(SolutionDir)Engine\PhysX\bin\*.*" "$(TargetDir)" /Y /I /E</Command>
     <ClInclude Include="ShipyardCrane.h" />
     <ClInclude Include="P_Teleportation.h" />
     <ClInclude Include="TargetDummy.h" />
-    <ClInclude Include="TestBullet.h" />
-    <ClInclude Include="TestCallbacks.h" />
     <ClInclude Include="T_FlashStrike.h" />
   </ItemGroup>
   <ItemGroup>
