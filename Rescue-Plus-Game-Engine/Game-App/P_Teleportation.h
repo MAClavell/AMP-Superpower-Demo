@@ -5,6 +5,8 @@
 
 class P_Teleportation : public Power
 {
+private:
+
 	DirectX::XMFLOAT3 teleportPosition;
 	InputManager* inputManager;
 	PowerPrevent prevent;
@@ -14,8 +16,6 @@ class P_Teleportation : public Power
 	bool teleport;
 	bool flashStrikeActive;
 	GameObject* hitEnemy;
-
-private:
 
 	// --------------------------------------------------------
 	// Activate behaviour

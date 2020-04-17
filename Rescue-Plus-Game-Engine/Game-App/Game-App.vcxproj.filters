@@ -92,6 +92,9 @@
     <ClCompile Include="Bolt.cpp">
       <Filter>Source Files\UserComponents</Filter>
     </ClCompile>
+    <ClCompile Include="T_ChargedBlast.cpp">
+      <Filter>Source Files\Powers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DXCore.h">
@@ -138,6 +141,9 @@
     </ClInclude>
     <ClInclude Include="Bolt.h">
       <Filter>Header Files\UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="T_ChargedBlast.h">
+      <Filter>Header Files\Powers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

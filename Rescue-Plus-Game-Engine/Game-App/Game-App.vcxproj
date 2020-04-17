@@ -239,6 +239,7 @@ xcopy "$(SolutionDir)Engine\PhysX\bin\*.*" "$(TargetDir)" /Y /I /E</Command>
     <ClCompile Include="ShipyardCrane.cpp" />
     <ClCompile Include="P_Teleportation.cpp" />
     <ClCompile Include="TargetDummy.cpp" />
+    <ClCompile Include="T_ChargedBlast.cpp" />
     <ClCompile Include="T_FlashStrike.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +257,7 @@ xcopy "$(SolutionDir)Engine\PhysX\bin\*.*" "$(TargetDir)" /Y /I /E</Command>
     <ClInclude Include="ShipyardCrane.h" />
     <ClInclude Include="P_Teleportation.h" />
     <ClInclude Include="TargetDummy.h" />
+    <ClInclude Include="T_ChargedBlast.h" />
     <ClInclude Include="T_FlashStrike.h" />
   </ItemGroup>
   <ItemGroup>

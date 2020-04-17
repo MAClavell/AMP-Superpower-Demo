@@ -10,6 +10,7 @@ using namespace DirectX;
 #define SPEED 3000
 #define MAX_BOLT_TIME 3
 #define BASE_BOLT_DAMAGE 1
+#define MAX_BOLT_DAMAGE 10
 
 Bolt::Bolt(GameObject* gameObject) : UserComponent(gameObject)
 {
@@ -19,6 +20,7 @@ Bolt::Bolt(GameObject* gameObject) : UserComponent(gameObject)
 	layersActive.Unset(CollisionLayer::Player);
 	layersInActive = CollisionLayers(false);
 	velocity = XMFLOAT3(0, 0, 0);
+	damage = BASE_BOLT_DAMAGE;
 
 	gameObject->AddComponent<MeshRenderer>(
 		ResourceManager::GetInstance()->GetMesh("Assets\\Models\\Basic\\sphere.obj"),
@@ -40,7 +42,7 @@ void Bolt::Activate(GameObject* playerCamera)
 	gameObject()->SetLocalRotation(0, 0, 0);
 }
 
-void Bolt::Start()
+void Bolt::Start(short damage)
 {
 	gameObject()->SetParent(nullptr);
 	collider->SetCollisionLayers(layersActive);
@@ -54,16 +56,21 @@ void Bolt::Start()
 	
 	started = true;
 	timer = MAX_BOLT_TIME;
+
+	if (damage < BASE_BOLT_DAMAGE)
+		damage = BASE_BOLT_DAMAGE;
+	else if (damage > MAX_BOLT_DAMAGE)
+		damage = MAX_BOLT_DAMAGE;
+	this->damage = damage;
 }
 
 void Bolt::Deactivate()
 {
 	started = false;
 	collider->SetCollisionLayers(layersInActive);
+	rigidBody->SetLinearVelocity(0, 0, 0);
 	rigidBody->SetKinematic(true);
 	gameObject()->SetEnabled(false);
-	printf("deactivated\n");
-	rigidBody->SetLinearVelocity(0, 0, 0);
 }
 
 void Bolt::FixedUpdate()
@@ -93,6 +100,6 @@ void Bolt::OnCollisionEnter(Collision collision)
 
 	if (collision.gameObject->GetName() == "TargetDummy")
 	{
-		collision.gameObject->GetComponent<TargetDummy>()->ApplyDamage(BASE_BOLT_DAMAGE);
+		collision.gameObject->GetComponent<TargetDummy>()->ApplyDamage(damage);
 	}
 }

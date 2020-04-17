@@ -13,13 +13,14 @@ private:
 	CollisionLayers layersInActive;
 	float timer;
 	bool started;
+	short damage;
 
 public:
 	Bolt(GameObject* gameObject);
 	~Bolt();
 
 	void Activate(GameObject* player);
-	void Start();
+	void Start(short damange = 1);
 	void Deactivate();
 
 	void FixedUpdate() override;

@@ -11,7 +11,6 @@ Player::Player(GameObject* gameObject) : UserComponent(gameObject)
 	//Setup powers
 	primary = new P_Teleportation();
 	secondary = new P_Bolt();
-	tertiary = nullptr;
 	equippedPower = secondary;
 }
 
@@ -21,8 +20,6 @@ Player::~Player()
 		delete primary;
 	if (secondary != nullptr)
 		delete secondary;
-	if (tertiary != nullptr)
-		delete tertiary;
 }
 
 
