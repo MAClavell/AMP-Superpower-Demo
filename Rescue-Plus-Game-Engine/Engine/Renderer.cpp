@@ -126,6 +126,12 @@ void Renderer::Release()
 
 	//Clean up shadow map
 	shadowRasterizer->Release();
+
+	//Clean up Dear ImGui
+	//Releases COM references that ImGui was given on setup
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
 }
 
 // Draw all entities in the render list
