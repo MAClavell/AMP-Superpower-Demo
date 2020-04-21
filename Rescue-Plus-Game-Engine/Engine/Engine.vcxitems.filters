@@ -52,6 +52,12 @@
     <Filter Include="Header Files\Input">
       <UniqueIdentifier>{6bb13951-74dc-4032-ae1e-60d2fd8a261d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DearImGui">
+      <UniqueIdentifier>{ee3cba2b-f558-43c4-8ecd-8d7a831e1b71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DearImGui">
+      <UniqueIdentifier>{bb969e25-feb8-4b83-abce-23b998ef13d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject.cpp">
@@ -125,6 +131,21 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Lights.cpp">
       <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DearImGui\imgui.cpp">
+      <Filter>Source Files\DearImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DearImGui\imgui_draw.cpp">
+      <Filter>Source Files\DearImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DearImGui\imgui_impl_dx11.cpp">
+      <Filter>Source Files\DearImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DearImGui\imgui_impl_win32.cpp">
+      <Filter>Source Files\DearImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DearImGui\imgui_widgets.cpp">
+      <Filter>Source Files\DearImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +259,30 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Times.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DearImGui\imconfig.h">
+      <Filter>Header Files\DearImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DearImGui\imgui.h">
+      <Filter>Header Files\DearImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DearImGui\imgui_impl_dx11.h">
+      <Filter>Header Files\DearImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DearImGui\imgui_impl_win32.h">
+      <Filter>Header Files\DearImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DearImGui\imgui_internal.h">
+      <Filter>Header Files\DearImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DearImGui\imstb_rectpack.h">
+      <Filter>Header Files\DearImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DearImGui\imstb_textedit.h">
+      <Filter>Header Files\DearImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DearImGui\imstb_truetype.h">
+      <Filter>Header Files\DearImGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,11 +3,14 @@
 #include "ResourceManager.h"
 #include "ExtendedMath.h"
 #include "Times.h"
+#include "DearImGui/imgui.h"
+#include "DearImGui/imgui_impl_win32.h"
+#include "DearImGui/imgui_impl_dx11.h"
 
 using namespace DirectX;
 
 // Initialize values in the renderer
-void Renderer::Init(ID3D11Device* device, ID3D11DeviceContext* context, UINT width, UINT height)
+void Renderer::Init(ID3D11Device* device, ID3D11DeviceContext* context, HWND hWnd, UINT width, UINT height)
 {
 	// Assign default clear color
 	this->SetClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -95,6 +98,19 @@ void Renderer::Init(ID3D11Device* device, ID3D11DeviceContext* context, UINT wid
 	shadowRastDesc.DepthBiasClamp = 0.0f;
 	shadowRastDesc.SlopeScaledDepthBias = 1.0f;
 	device->CreateRasterizerState(&shadowRastDesc, &shadowRasterizer);
+	
+
+	// --------------------------------------------------------
+	//Setup Dear ImGui
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	ImGui_ImplWin32_Init(hWnd);
+	ImGui_ImplDX11_Init(device, context);
+	//Create a new frame
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
 }
 
 // Destructor for when the singleton instance is deleted
@@ -140,6 +156,8 @@ void Renderer::Draw(ID3D11DeviceContext* context,
 	DrawDebugShapes(context, camera);
 
 	DrawTransparentObjects(context, camera);
+
+	DrawGUI();
 
 	// Need to unbind the shadow map from pixel shader stage
 	// so it can be rendered into properly next frame
@@ -431,6 +449,18 @@ void Renderer::DrawSky(ID3D11DeviceContext* context, Camera* camera)
 	// Reset states
 	context->RSSetState(0);
 	context->OMSetDepthStencilState(0, 0);
+}
+
+void Renderer::DrawGUI()
+{
+	//Assemble draw data
+	ImGui::Render();
+	//Render draw data
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	//Create a new frame
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
 }
 
 // Add an entity to the render list

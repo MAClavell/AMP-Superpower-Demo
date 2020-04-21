@@ -131,7 +131,7 @@ void Game::Init()
 	//Initialize singletons
 	inputManager = InputManager::GetInstance();
 	renderer = Renderer::GetInstance();
-	renderer->Init(device, context, width, height);
+	renderer->Init(device, context, hWnd, width, height);
 	entityManager = EntityManager::GetInstance();
 	physicsManager = PhysicsManager::GetInstance();
 

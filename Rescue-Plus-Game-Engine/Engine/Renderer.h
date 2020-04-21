@@ -79,26 +79,29 @@ private:
 	// Draw opaque objects
 	// --------------------------------------------------------
 	void DrawOpaqueObjects(ID3D11DeviceContext* context, Camera* camera);
-
-	// --------------------------------------------------------
-	// Draw transparent objects
-	// --------------------------------------------------------
-	void DrawTransparentObjects(ID3D11DeviceContext* context, Camera* camera);
-
-
-
+	
 	// --------------------------------------------------------
 	// Draw the skybox
 	// --------------------------------------------------------
 	void DrawSky(ID3D11DeviceContext* context, Camera* camera);
-
-public:
 
 	// --------------------------------------------------------
 	// Draw debug shapes
 	// --------------------------------------------------------
 	void DrawDebugShapes(ID3D11DeviceContext* context, Camera* camera);
 
+	// --------------------------------------------------------
+	// Draw transparent objects
+	// --------------------------------------------------------
+	void DrawTransparentObjects(ID3D11DeviceContext* context, Camera* camera);
+
+	// --------------------------------------------------------
+	// Draw the GUI via Dear ImGui
+	// --------------------------------------------------------
+	void DrawGUI();
+
+public:
+	
 	// --------------------------------------------------------
 	// Get the singleton instance of the renderer
 	// --------------------------------------------------------
@@ -117,7 +120,7 @@ public:
 	// --------------------------------------------------------
 	// Initialize values in the renderer
 	// --------------------------------------------------------
-	void Init(ID3D11Device* device, ID3D11DeviceContext* context, UINT width, UINT height);
+	void Init(ID3D11Device* device, ID3D11DeviceContext* context, HWND hWnd, UINT width, UINT height);
 
 	//Delete this
 	Renderer(Renderer const&) = delete;

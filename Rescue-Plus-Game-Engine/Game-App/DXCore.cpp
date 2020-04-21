@@ -544,7 +544,7 @@ void DXCore::CreateConsoleWindow(int bufferLines, int bufferColumns, int windowL
 
 
 
-
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 // --------------------------------------------------------
 // Handles messages that are sent to our window by the
 // operating system.  Ignoring these messages would cause
@@ -553,6 +553,9 @@ void DXCore::CreateConsoleWindow(int bufferLines, int bufferColumns, int windowL
 // --------------------------------------------------------
 LRESULT DXCore::ProcessMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
+		return true;
+
 	// Check the incoming message and handle any we care about
 	switch (uMsg)
 	{
