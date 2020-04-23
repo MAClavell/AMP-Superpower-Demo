@@ -3,7 +3,7 @@
 #include "Player.h"
 
 #define CHARGEUP 0.3f
-#define MAX_LEVEL 6;
+#define MAX_LEVEL 6
 #define DAMAGE_PER_LEVEL 1
 #define TIME_PER_LEVEL 1.5f
 #define JUICE_PER_LEVEL 1
@@ -38,18 +38,18 @@ PowerPrevent T_ChargedBlast::Hold(Player& player, short& currentJuice)
 	//Initial chargeup and then the user can hold to "level up" the bolt
 	if (timer < 0)
 	{
-		if (level < 8)
+		if (level < MAX_LEVEL)
 		{
 			chargeTimer += Time::deltaTime();
 			if (chargeTimer > TIME_PER_LEVEL);
 			{
+				chargeTimer -= TIME_PER_LEVEL;
 				//Don't level up if no juice
 				if (currentJuice < (level * JUICE_PER_LEVEL))
 				{
 					return PowerPrevent::Nothing;
 				}
-				chargeTimer -= TIME_PER_LEVEL;
-				level++;
+				else level++;
 			}
 		}
 	}
@@ -62,7 +62,7 @@ PowerPrevent T_ChargedBlast::Stop(Player& player, short& currentJuice)
 {
 	//Level 1 requires no extra juice cost
 	if(level != 1)
-		currentJuice -= level * JUICE_PER_LEVEL;
+		currentJuice -= (level - 1) * JUICE_PER_LEVEL;
 	bolt->Start(level * DAMAGE_PER_LEVEL);
 	return PowerPrevent::Nothing;
 }

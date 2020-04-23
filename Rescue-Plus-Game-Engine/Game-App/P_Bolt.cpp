@@ -14,6 +14,7 @@ P_Bolt::P_Bolt()
 	active = false;
 	shot = false;
 	chargedBlastActive = false;
+	name = "Bolt";
 
 	//Create the bolt object
 	GameObject* boltObj = new GameObject("Bolt");

@@ -6,6 +6,7 @@
 #include "JobSystem.h"
 #include "Raycast.h"
 #include "PerlinNoise.h"
+#include "DearImGui/imgui.h"
 
 // For the DirectX Math library
 using namespace DirectX;
@@ -224,6 +225,9 @@ void Game::Update()
 		box4->AddComponent<BoxCollider>(box4->GetScale());
 	}
 
+	//Setup GUI for this frame
+	OnGui();
+
 	//All game code goes above
 	// --------------------------------------------------------
 
@@ -249,6 +253,51 @@ void Game::Draw()
 	swapChain->Present(0, 0);
 }
 
+
+void Game::OnGui()
+{
+	ImGui::SetNextWindowPos(ImVec2(1, 1));
+	ImGui::SetNextWindowSize(ImVec2(305, 300));
+	ImGui::Begin("AMP: Superpower Demo", (bool*)0, 
+		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove);
+
+	//Controls section
+	ImGui::Text("Controls:\n");
+	ImGui::Text("   WASD: Move\n");
+	ImGui::Text("   SPACE: Jump\n");
+	ImGui::Text("   SHIFT: Sprint\n");
+	ImGui::Text("   L-CTRL: CROUCH\n");
+	ImGui::Text("   (Crouch while sprinting to slide)\n");
+	ImGui::Text("   J: Recover 1 juice\n");
+	ImGui::Text("   1: Teleportation\n");
+	ImGui::Text("   2: Bolt\n");
+	ImGui::Separator();
+
+	//Juice section
+	ImGui::Text("Juice: %d/%d", player->GetCurrentJuice(), player->GetMaxJuice());
+	ImGui::Separator();
+
+	//Powers section
+	std::string powerName = player->GetEquippedPowerName();
+	ImGui::Text("Selected power: %s", powerName.c_str());
+	//Teleportation UI
+	if (powerName == "Teleportation")
+	{
+		ImGui::Text("   Teleport: Hold RMOUSE to target a\n");
+		ImGui::Text("		location. Release to teleport\n");
+		ImGui::Text("   Flash Strike: LMOUSE while holding\n");
+		ImGui::Text("		RMOUSE on an enemy. 1 Juice.\n");
+	}
+	//Bolt UI
+	else if (powerName == "Bolt")
+	{
+		ImGui::Text("   Bolt: LMOUSE to launch a projectile\n");
+		ImGui::Text("   Charged Blast: Hold RMOUSE to increase\n");
+		ImGui::Text("		damage. Uses more juice the\n");
+		ImGui::Text("		longer it is held.\n");
+	}
+	ImGui::End();
+}
 
 #pragma region Mouse Input
 

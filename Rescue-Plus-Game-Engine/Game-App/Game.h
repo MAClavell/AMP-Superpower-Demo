@@ -59,5 +59,6 @@ private:
 	// Initialization helper methods - feel free to customize, combine, etc.
 	void LoadAssets();
 	void SetupScene();
+	void OnGui();
 };
 

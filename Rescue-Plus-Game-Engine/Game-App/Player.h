@@ -7,7 +7,9 @@ class Player :
 	public UserComponent
 {
 private:
+	InputManager* inputManager;
 	FirstPersonMovement* fpm;
+
 
 	Power* primary;
 	Power* secondary;
@@ -44,5 +46,20 @@ public:
 	// Get the current height of the player
 	// --------------------------------------------------------
 	float GetHeight();
+
+	// --------------------------------------------------------
+	// Get the name of the equipped power
+	// --------------------------------------------------------
+	std::string GetEquippedPowerName();
+
+	// --------------------------------------------------------
+	// Get the current amount of juice
+	// --------------------------------------------------------
+	short GetCurrentJuice();
+
+	// --------------------------------------------------------
+	// Get the max amount of juice
+	// --------------------------------------------------------
+	short GetMaxJuice();
 };
 

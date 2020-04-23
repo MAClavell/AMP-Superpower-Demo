@@ -1,5 +1,6 @@
 #pragma once
 #include <unordered_map>
+#include <string>
 
 enum class PowerPrevent { Nothing, Movement, MovementAndCamera };
 
@@ -63,6 +64,7 @@ protected:
 	bool canUse = true;
 	std::unordered_map<std::string, IPower*> tricks;
 	std::unordered_map<std::string, IEnhancement*> enhancements;
+	std::string name;
 
 	Power() { };
 
@@ -88,4 +90,9 @@ public:
 	{
 		return canUse;
 	};
+
+	// --------------------------------------------------------
+	// Get the name of this power
+	// --------------------------------------------------------
+	std::string GetName() { return name; }
 };

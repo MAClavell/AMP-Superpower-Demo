@@ -7,11 +7,12 @@ Player::Player(GameObject* gameObject) : UserComponent(gameObject)
 	fpm = gameObject->GetComponent<FirstPersonMovement>();
 	maxJuice = 8;
 	currentJuice = maxJuice;
+	inputManager = InputManager::GetInstance();
 
 	//Setup powers
 	primary = new P_Teleportation();
 	secondary = new P_Bolt();
-	equippedPower = secondary;
+	equippedPower = primary;
 }
 
 Player::~Player() 
@@ -67,6 +68,18 @@ void Player::Update()
 	{
 		fpm->SetControlsActive(true);
 		fpm->SetCameraControlsActive(true);
+
+		if (inputManager->GetKeyDown(Key::One))
+			equippedPower = primary;
+		else if (inputManager->GetKeyDown(Key::Two))
+			equippedPower = secondary;
+	}
+
+	//FOR DEMO ONLY
+	//Add juice
+	if (inputManager->GetKeyDown(Key::J))
+	{
+		currentJuice += currentJuice != maxJuice ? 1 : 0;
 	}
 }
 
@@ -86,4 +99,22 @@ ColliderBase* Player::GetColliderBase()
 float Player::GetHeight()
 {
 	return fpm->GetHeight();
+}
+
+// Get the name of the equipped power
+std::string Player::GetEquippedPowerName()
+{
+	return equippedPower->GetName();
+}
+
+// Get the current amount of juice
+short Player::GetCurrentJuice()
+{
+	return currentJuice;
+}
+
+// Get the max amount of juice
+short Player::GetMaxJuice()
+{
+	return maxJuice;
 }

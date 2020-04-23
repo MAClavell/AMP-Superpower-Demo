@@ -19,6 +19,7 @@ P_Teleportation::P_Teleportation()
 	flashStrikeActive = false;
 	layers = CollisionLayers(true);
 	layers.Unset(CollisionLayer::Player);
+	name = "Teleportation";
 
 	//Add tricks
 	tricks.insert({ "FlashStrike", new T_FlashStrike() });
